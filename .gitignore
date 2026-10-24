@@ -3,3 +3,9 @@ __pycache__/
 .pytest_cache/
 *.pyc
 trained_*_dummy/
+
+*.pdf
+*.docx
+*.png
+*.csv
+train_output.txt
