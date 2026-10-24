@@ -1,0 +1,202 @@
+{"task": "complete", "input": "how my family", "output": "how is my family", "pattern": "complete:how is my family"}
+{"task": "complete", "input": "how my friend", "output": "how is my friend", "pattern": "complete:how is my friend"}
+{"task": "complete", "input": "family school", "output": "is my family at school", "pattern": "complete:is my family at school"}
+{"task": "complete", "input": "family here", "output": "is my family here", "pattern": "complete:is my family here"}
+{"task": "complete", "input": "home family", "output": "is my family home", "pattern": "complete:is my family home"}
+{"task": "complete", "input": "class family", "output": "is my family in class", "pattern": "complete:is my family in class"}
+{"task": "complete", "input": "friend school", "output": "is my friend at school", "pattern": "complete:is my friend at school"}
+{"task": "complete", "input": "friend here", "output": "is my friend here", "pattern": "complete:is my friend here"}
+{"task": "complete", "input": "my friend home", "output": "is my friend home", "pattern": "complete:is my friend home"}
+{"task": "complete", "input": "my friend class", "output": "is my friend in class", "pattern": "complete:is my friend in class"}
+{"task": "complete", "input": "my family deaf", "output": "my family is deaf", "pattern": "complete:my family is deaf"}
+{"task": "complete", "input": "eat family", "output": "my family is eating", "pattern": "complete:my family is eating"}
+{"task": "complete", "input": "fine family", "output": "my family is fine", "pattern": "complete:my family is fine"}
+{"task": "complete", "input": "my family good", "output": "my family is good", "pattern": "complete:my family is good"}
+{"task": "complete", "input": "learn family", "output": "my family is learning", "pattern": "complete:my family is learning"}
+{"task": "complete", "input": "my family study", "output": "my family is studying", "pattern": "complete:my family is studying"}
+{"task": "complete", "input": "deaf friend", "output": "my friend is deaf", "pattern": "complete:my friend is deaf"}
+{"task": "complete", "input": "friend eat", "output": "my friend is eating", "pattern": "complete:my friend is eating"}
+{"task": "complete", "input": "fine friend", "output": "my friend is fine", "pattern": "complete:my friend is fine"}
+{"task": "complete", "input": "friend good", "output": "my friend is good", "pattern": "complete:my friend is good"}
+{"task": "complete", "input": "friend learn", "output": "my friend is learning", "pattern": "complete:my friend is learning"}
+{"task": "complete", "input": "friend study", "output": "my friend is studying", "pattern": "complete:my friend is studying"}
+{"task": "complete", "input": "where family", "output": "where is my family", "pattern": "complete:where is my family"}
+{"task": "complete", "input": "friend where", "output": "where is my friend", "pattern": "complete:where is my friend"}
+{"task": "reduce", "input": "can you say that again", "output": "again", "pattern": "reduce:again"}
+{"task": "reduce", "input": "i have class today", "output": "class today", "pattern": "reduce:class today"}
+{"task": "reduce", "input": "i am going to class today", "output": "class today", "pattern": "reduce:class today"}
+{"task": "reduce", "input": "i am so deaf", "output": "deaf", "pattern": "reduce:deaf"}
+{"task": "reduce", "input": "i am very deaf", "output": "deaf", "pattern": "reduce:deaf"}
+{"task": "reduce", "input": "i am really eating", "output": "eat", "pattern": "reduce:eat"}
+{"task": "reduce", "input": "i am eating in class", "output": "eat class", "pattern": "reduce:eat class"}
+{"task": "reduce", "input": "i am eating here", "output": "eat here", "pattern": "reduce:eat here"}
+{"task": "reduce", "input": "are you eating at home", "output": "eat home", "pattern": "reduce:eat home"}
+{"task": "reduce", "input": "are you eating at school", "output": "eat school", "pattern": "reduce:eat school"}
+{"task": "reduce", "input": "my family is in class", "output": "family class", "pattern": "reduce:family class"}
+{"task": "reduce", "input": "my family is deaf", "output": "family deaf", "pattern": "reduce:family deaf"}
+{"task": "reduce", "input": "family is deaf", "output": "family deaf", "pattern": "reduce:family deaf"}
+{"task": "reduce", "input": "my family is eating", "output": "family eat", "pattern": "reduce:family eat"}
+{"task": "reduce", "input": "your family is eating", "output": "family eat", "pattern": "reduce:family eat"}
+{"task": "reduce", "input": "her family is fine", "output": "family fine", "pattern": "reduce:family fine"}
+{"task": "reduce", "input": "your family is fine", "output": "family fine", "pattern": "reduce:family fine"}
+{"task": "reduce", "input": "my family is good", "output": "family good", "pattern": "reduce:family good"}
+{"task": "reduce", "input": "family is very good", "output": "family good", "pattern": "reduce:family good"}
+{"task": "reduce", "input": "family is here", "output": "family here", "pattern": "reduce:family here"}
+{"task": "reduce", "input": "is family at home", "output": "family home", "pattern": "reduce:family home"}
+{"task": "reduce", "input": "family is learning", "output": "family learn", "pattern": "reduce:family learn"}
+{"task": "reduce", "input": "his family is learning", "output": "family learn", "pattern": "reduce:family learn"}
+{"task": "reduce", "input": "family is at school", "output": "family school", "pattern": "reduce:family school"}
+{"task": "reduce", "input": "my family is studying", "output": "family study", "pattern": "reduce:family study"}
+{"task": "reduce", "input": "his family is studying", "output": "family study", "pattern": "reduce:family study"}
+{"task": "reduce", "input": "my father is in class", "output": "father class", "pattern": "reduce:father class"}
+{"task": "reduce", "input": "her father is deaf", "output": "father deaf", "pattern": "reduce:father deaf"}
+{"task": "reduce", "input": "father is very deaf", "output": "father deaf", "pattern": "reduce:father deaf"}
+{"task": "reduce", "input": "his father is eating", "output": "father eat", "pattern": "reduce:father eat"}
+{"task": "reduce", "input": "is father eating", "output": "father eat", "pattern": "reduce:father eat"}
+{"task": "reduce", "input": "father is fine", "output": "father fine", "pattern": "reduce:father fine"}
+{"task": "reduce", "input": "her father is fine", "output": "father fine", "pattern": "reduce:father fine"}
+{"task": "reduce", "input": "father is very good", "output": "father good", "pattern": "reduce:father good"}
+{"task": "reduce", "input": "my father is good", "output": "father good", "pattern": "reduce:father good"}
+{"task": "reduce", "input": "my father is here", "output": "father here", "pattern": "reduce:father here"}
+{"task": "reduce", "input": "is father at home", "output": "father home", "pattern": "reduce:father home"}
+{"task": "reduce", "input": "my father is learning", "output": "father learn", "pattern": "reduce:father learn"}
+{"task": "reduce", "input": "is father learning", "output": "father learn", "pattern": "reduce:father learn"}
+{"task": "reduce", "input": "is father at school", "output": "father school", "pattern": "reduce:father school"}
+{"task": "reduce", "input": "father is studying", "output": "father study", "pattern": "reduce:father study"}
+{"task": "reduce", "input": "is father studying", "output": "father study", "pattern": "reduce:father study"}
+{"task": "reduce", "input": "i am very fine", "output": "fine", "pattern": "reduce:fine"}
+{"task": "reduce", "input": "i am still fine", "output": "fine", "pattern": "reduce:fine"}
+{"task": "reduce", "input": "friend is in class", "output": "friend class", "pattern": "reduce:friend class"}
+{"task": "reduce", "input": "her friend is deaf", "output": "friend deaf", "pattern": "reduce:friend deaf"}
+{"task": "reduce", "input": "my friend is deaf", "output": "friend deaf", "pattern": "reduce:friend deaf"}
+{"task": "reduce", "input": "is friend eating", "output": "friend eat", "pattern": "reduce:friend eat"}
+{"task": "reduce", "input": "his friend is eating", "output": "friend eat", "pattern": "reduce:friend eat"}
+{"task": "reduce", "input": "my friend is fine", "output": "friend fine", "pattern": "reduce:friend fine"}
+{"task": "reduce", "input": "your friend is fine", "output": "friend fine", "pattern": "reduce:friend fine"}
+{"task": "reduce", "input": "your friend is good", "output": "friend good", "pattern": "reduce:friend good"}
+{"task": "reduce", "input": "friend is very good", "output": "friend good", "pattern": "reduce:friend good"}
+{"task": "reduce", "input": "is friend here", "output": "friend here", "pattern": "reduce:friend here"}
+{"task": "reduce", "input": "is friend at home", "output": "friend home", "pattern": "reduce:friend home"}
+{"task": "reduce", "input": "his friend is learning", "output": "friend learn", "pattern": "reduce:friend learn"}
+{"task": "reduce", "input": "is friend learning", "output": "friend learn", "pattern": "reduce:friend learn"}
+{"task": "reduce", "input": "my friend is at school", "output": "friend school", "pattern": "reduce:friend school"}
+{"task": "reduce", "input": "my friend is studying", "output": "friend study", "pattern": "reduce:friend study"}
+{"task": "reduce", "input": "friend is studying", "output": "friend study", "pattern": "reduce:friend study"}
+{"task": "reduce", "input": "i am so good", "output": "good", "pattern": "reduce:good"}
+{"task": "reduce", "input": "i am still good", "output": "good", "pattern": "reduce:good"}
+{"task": "reduce", "input": "i need some help", "output": "help", "pattern": "reduce:help"}
+{"task": "reduce", "input": "can i help you", "output": "help you", "pattern": "reduce:help you"}
+{"task": "reduce", "input": "do you need help", "output": "help you", "pattern": "reduce:help you"}
+{"task": "reduce", "input": "come here please", "output": "here", "pattern": "reduce:here"}
+{"task": "reduce", "input": "how is family", "output": "how family", "pattern": "reduce:how family"}
+{"task": "reduce", "input": "how is your family", "output": "how family", "pattern": "reduce:how family"}
+{"task": "reduce", "input": "is father fine", "output": "how father", "pattern": "reduce:how father"}
+{"task": "reduce", "input": "how is his father", "output": "how father", "pattern": "reduce:how father"}
+{"task": "reduce", "input": "is friend okay", "output": "how friend", "pattern": "reduce:how friend"}
+{"task": "reduce", "input": "how is my friend", "output": "how friend", "pattern": "reduce:how friend"}
+{"task": "reduce", "input": "how is mother", "output": "how mother", "pattern": "reduce:how mother"}
+{"task": "reduce", "input": "how is my mother", "output": "how mother", "pattern": "reduce:how mother"}
+{"task": "reduce", "input": "how is his teacher", "output": "how teacher", "pattern": "reduce:how teacher"}
+{"task": "reduce", "input": "how is my teacher", "output": "how teacher", "pattern": "reduce:how teacher"}
+{"task": "reduce", "input": "are you okay", "output": "how you", "pattern": "reduce:how you"}
+{"task": "reduce", "input": "how are you doing", "output": "how you", "pattern": "reduce:how you"}
+{"task": "reduce", "input": "how are you today", "output": "how you today", "pattern": "reduce:how you today"}
+{"task": "reduce", "input": "i am really learning", "output": "learn", "pattern": "reduce:learn"}
+{"task": "reduce", "input": "are you learning in class", "output": "learn class", "pattern": "reduce:learn class"}
+{"task": "reduce", "input": "are you still learning here", "output": "learn here", "pattern": "reduce:learn here"}
+{"task": "reduce", "input": "i am learning at home", "output": "learn home", "pattern": "reduce:learn home"}
+{"task": "reduce", "input": "are you learning at school", "output": "learn school", "pattern": "reduce:learn school"}
+{"task": "reduce", "input": "is mother in class", "output": "mother class", "pattern": "reduce:mother class"}
+{"task": "reduce", "input": "my mother is deaf", "output": "mother deaf", "pattern": "reduce:mother deaf"}
+{"task": "reduce", "input": "mother is deaf", "output": "mother deaf", "pattern": "reduce:mother deaf"}
+{"task": "reduce", "input": "mother is eating", "output": "mother eat", "pattern": "reduce:mother eat"}
+{"task": "reduce", "input": "my mother is eating", "output": "mother eat", "pattern": "reduce:mother eat"}
+{"task": "reduce", "input": "my mother is fine", "output": "mother fine", "pattern": "reduce:mother fine"}
+{"task": "reduce", "input": "mother is fine", "output": "mother fine", "pattern": "reduce:mother fine"}
+{"task": "reduce", "input": "mother is good", "output": "mother good", "pattern": "reduce:mother good"}
+{"task": "reduce", "input": "her mother is good", "output": "mother good", "pattern": "reduce:mother good"}
+{"task": "reduce", "input": "my mother is here", "output": "mother here", "pattern": "reduce:mother here"}
+{"task": "reduce", "input": "mother is at home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "his mother is learning", "output": "mother learn", "pattern": "reduce:mother learn"}
+{"task": "reduce", "input": "your mother is learning", "output": "mother learn", "pattern": "reduce:mother learn"}
+{"task": "reduce", "input": "mother is at school", "output": "mother school", "pattern": "reduce:mother school"}
+{"task": "reduce", "input": "your mother is studying", "output": "mother study", "pattern": "reduce:mother study"}
+{"task": "reduce", "input": "mother is studying", "output": "mother study", "pattern": "reduce:mother study"}
+{"task": "reduce", "input": "very nice to meet you", "output": "nice", "pattern": "reduce:nice"}
+{"task": "reduce", "input": "nice to meet you", "output": "nice", "pattern": "reduce:nice"}
+{"task": "reduce", "input": "please say it again", "output": "please again", "pattern": "reduce:please again"}
+{"task": "reduce", "input": "please help", "output": "please help", "pattern": "reduce:please help"}
+{"task": "reduce", "input": "i am so sorry", "output": "sorry", "pattern": "reduce:sorry"}
+{"task": "reduce", "input": "i am still studying", "output": "study", "pattern": "reduce:study"}
+{"task": "reduce", "input": "are you studying in class", "output": "study class", "pattern": "reduce:study class"}
+{"task": "reduce", "input": "i am studying here", "output": "study here", "pattern": "reduce:study here"}
+{"task": "reduce", "input": "are you studying at home", "output": "study home", "pattern": "reduce:study home"}
+{"task": "reduce", "input": "i am studying at school", "output": "study school", "pattern": "reduce:study school"}
+{"task": "reduce", "input": "my teacher is in class", "output": "teacher class", "pattern": "reduce:teacher class"}
+{"task": "reduce", "input": "my teacher is deaf", "output": "teacher deaf", "pattern": "reduce:teacher deaf"}
+{"task": "reduce", "input": "your teacher is deaf", "output": "teacher deaf", "pattern": "reduce:teacher deaf"}
+{"task": "reduce", "input": "my teacher is eating", "output": "teacher eat", "pattern": "reduce:teacher eat"}
+{"task": "reduce", "input": "your teacher is eating", "output": "teacher eat", "pattern": "reduce:teacher eat"}
+{"task": "reduce", "input": "teacher is fine", "output": "teacher fine", "pattern": "reduce:teacher fine"}
+{"task": "reduce", "input": "your teacher is fine", "output": "teacher fine", "pattern": "reduce:teacher fine"}
+{"task": "reduce", "input": "teacher is good", "output": "teacher good", "pattern": "reduce:teacher good"}
+{"task": "reduce", "input": "my teacher is good", "output": "teacher good", "pattern": "reduce:teacher good"}
+{"task": "reduce", "input": "is teacher here", "output": "teacher here", "pattern": "reduce:teacher here"}
+{"task": "reduce", "input": "teacher is at home", "output": "teacher home", "pattern": "reduce:teacher home"}
+{"task": "reduce", "input": "teacher is learning", "output": "teacher learn", "pattern": "reduce:teacher learn"}
+{"task": "reduce", "input": "his teacher is learning", "output": "teacher learn", "pattern": "reduce:teacher learn"}
+{"task": "reduce", "input": "teacher is at school", "output": "teacher school", "pattern": "reduce:teacher school"}
+{"task": "reduce", "input": "is teacher studying", "output": "teacher study", "pattern": "reduce:teacher study"}
+{"task": "reduce", "input": "my teacher is studying", "output": "teacher study", "pattern": "reduce:teacher study"}
+{"task": "reduce", "input": "do you understand me", "output": "understand", "pattern": "reduce:understand"}
+{"task": "reduce", "input": "do you understand it", "output": "understand", "pattern": "reduce:understand"}
+{"task": "reduce", "input": "i want water", "output": "water", "pattern": "reduce:water"}
+{"task": "reduce", "input": "do you know what time it is", "output": "what time", "pattern": "reduce:what time"}
+{"task": "reduce", "input": "what time is the class", "output": "what time class", "pattern": "reduce:what time class"}
+{"task": "reduce", "input": "what time is your school", "output": "what time school", "pattern": "reduce:what time school"}
+{"task": "reduce", "input": "what time do you eat", "output": "what time you eat", "pattern": "reduce:what time you eat"}
+{"task": "reduce", "input": "what time are you learning", "output": "what time you learn", "pattern": "reduce:what time you learn"}
+{"task": "reduce", "input": "what time do you study", "output": "what time you study", "pattern": "reduce:what time you study"}
+{"task": "reduce", "input": "where is my class", "output": "where class", "pattern": "reduce:where class"}
+{"task": "reduce", "input": "where is class", "output": "where class", "pattern": "reduce:where class"}
+{"task": "reduce", "input": "where is family", "output": "where family", "pattern": "reduce:where family"}
+{"task": "reduce", "input": "where is your family", "output": "where family", "pattern": "reduce:where family"}
+{"task": "reduce", "input": "where is his father", "output": "where father", "pattern": "reduce:where father"}
+{"task": "reduce", "input": "where is your father", "output": "where father", "pattern": "reduce:where father"}
+{"task": "reduce", "input": "where is your friend", "output": "where friend", "pattern": "reduce:where friend"}
+{"task": "reduce", "input": "where is friend", "output": "where friend", "pattern": "reduce:where friend"}
+{"task": "reduce", "input": "where is my home", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "where is your home", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "where is your mother", "output": "where mother", "pattern": "reduce:where mother"}
+{"task": "reduce", "input": "where is my mother", "output": "where mother", "pattern": "reduce:where mother"}
+{"task": "reduce", "input": "where is my school", "output": "where school", "pattern": "reduce:where school"}
+{"task": "reduce", "input": "where is your school", "output": "where school", "pattern": "reduce:where school"}
+{"task": "reduce", "input": "where is his teacher", "output": "where teacher", "pattern": "reduce:where teacher"}
+{"task": "reduce", "input": "where is my teacher", "output": "where teacher", "pattern": "reduce:where teacher"}
+{"task": "reduce", "input": "where are you", "output": "where you", "pattern": "reduce:where you"}
+{"task": "reduce", "input": "why is family deaf", "output": "why family deaf", "pattern": "reduce:why family deaf"}
+{"task": "reduce", "input": "why is your family fine", "output": "why family fine", "pattern": "reduce:why family fine"}
+{"task": "reduce", "input": "why is your family good", "output": "why family good", "pattern": "reduce:why family good"}
+{"task": "reduce", "input": "why is my father deaf", "output": "why father deaf", "pattern": "reduce:why father deaf"}
+{"task": "reduce", "input": "why is your father fine", "output": "why father fine", "pattern": "reduce:why father fine"}
+{"task": "reduce", "input": "why is my father good", "output": "why father good", "pattern": "reduce:why father good"}
+{"task": "reduce", "input": "why is my friend deaf", "output": "why friend deaf", "pattern": "reduce:why friend deaf"}
+{"task": "reduce", "input": "why is my friend fine", "output": "why friend fine", "pattern": "reduce:why friend fine"}
+{"task": "reduce", "input": "why is my friend good", "output": "why friend good", "pattern": "reduce:why friend good"}
+{"task": "reduce", "input": "why is my mother deaf", "output": "why mother deaf", "pattern": "reduce:why mother deaf"}
+{"task": "reduce", "input": "why is my mother fine", "output": "why mother fine", "pattern": "reduce:why mother fine"}
+{"task": "reduce", "input": "why is your mother good", "output": "why mother good", "pattern": "reduce:why mother good"}
+{"task": "reduce", "input": "why is my teacher deaf", "output": "why teacher deaf", "pattern": "reduce:why teacher deaf"}
+{"task": "reduce", "input": "why is teacher fine", "output": "why teacher fine", "pattern": "reduce:why teacher fine"}
+{"task": "reduce", "input": "why is your teacher good", "output": "why teacher good", "pattern": "reduce:why teacher good"}
+{"task": "reduce", "input": "why are you so deaf", "output": "why you deaf", "pattern": "reduce:why you deaf"}
+{"task": "reduce", "input": "why you are deaf", "output": "why you deaf", "pattern": "reduce:why you deaf"}
+{"task": "reduce", "input": "why you are fine", "output": "why you fine", "pattern": "reduce:why you fine"}
+{"task": "reduce", "input": "tell me why you are fine", "output": "why you fine", "pattern": "reduce:why you fine"}
+{"task": "reduce", "input": "why are you good", "output": "why you good", "pattern": "reduce:why you good"}
+{"task": "reduce", "input": "why you are good", "output": "why you good", "pattern": "reduce:why you good"}
+{"task": "reduce", "input": "yes it is", "output": "yes", "pattern": "reduce:yes"}
+{"task": "reduce", "input": "you look deaf", "output": "you deaf", "pattern": "reduce:you deaf"}
+{"task": "reduce", "input": "you are fine", "output": "you fine", "pattern": "reduce:you fine"}
+{"task": "reduce", "input": "you are good", "output": "you good", "pattern": "reduce:you good"}
+{"task": "reduce", "input": "do you want water", "output": "you water", "pattern": "reduce:you water"}

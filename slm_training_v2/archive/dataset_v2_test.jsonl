@@ -1,0 +1,58 @@
+{"task": "reduce", "input": "where is home", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "where is the house", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "where is my home", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "where is my house", "output": "where home", "pattern": "reduce:where home"}
+{"task": "reduce", "input": "my mother is home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "mother is home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "is my mother home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "is mother home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "my mom is at home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "mother is at home", "output": "mother home", "pattern": "reduce:mother home"}
+{"task": "reduce", "input": "she is home", "output": "she home", "pattern": "reduce:she home"}
+{"task": "reduce", "input": "is she home", "output": "she home", "pattern": "reduce:she home"}
+{"task": "reduce", "input": "she is at home", "output": "she home", "pattern": "reduce:she home"}
+{"task": "reduce", "input": "he is home", "output": "he home", "pattern": "reduce:he home"}
+{"task": "reduce", "input": "is he home", "output": "he home", "pattern": "reduce:he home"}
+{"task": "reduce", "input": "he is at home", "output": "he home", "pattern": "reduce:he home"}
+{"task": "reduce", "input": "what is mother name", "output": "name mother", "pattern": "reduce:name mother"}
+{"task": "reduce", "input": "what is my mother name", "output": "name mother", "pattern": "reduce:name mother"}
+{"task": "reduce", "input": "tell me mother name", "output": "name mother", "pattern": "reduce:name mother"}
+{"task": "reduce", "input": "how is he", "output": "how he", "pattern": "reduce:how he"}
+{"task": "reduce", "input": "how is he doing", "output": "how he", "pattern": "reduce:how he"}
+{"task": "reduce", "input": "is he fine", "output": "how he", "pattern": "reduce:how he"}
+{"task": "reduce", "input": "is he okay", "output": "how he", "pattern": "reduce:how he"}
+{"task": "reduce", "input": "my father is going home", "output": "father going home", "pattern": "reduce:father going home"}
+{"task": "reduce", "input": "father is going home", "output": "father going home", "pattern": "reduce:father going home"}
+{"task": "reduce", "input": "my dad is going home", "output": "father going home", "pattern": "reduce:father going home"}
+{"task": "complete", "input": "father driving", "output": "father is driving", "pattern": "complete:father is driving"}
+{"task": "complete", "input": "driving father", "output": "father is driving", "pattern": "complete:father is driving"}
+{"task": "complete", "input": "she laundry", "output": "she is doing laundry", "pattern": "complete:she is doing laundry"}
+{"task": "complete", "input": "laundry she", "output": "she is doing laundry", "pattern": "complete:she is doing laundry"}
+{"task": "complete", "input": "where home", "output": "where is home", "pattern": "complete:where is home"}
+{"task": "complete", "input": "home where", "output": "where is home", "pattern": "complete:where is home"}
+{"task": "complete", "input": "she home", "output": "is she home", "pattern": "complete:is she home"}
+{"task": "complete", "input": "home she", "output": "is she home", "pattern": "complete:is she home"}
+{"task": "complete", "input": "name his", "output": "what is his name", "pattern": "complete:what is his name"}
+{"task": "complete", "input": "his name", "output": "what is his name", "pattern": "complete:what is his name"}
+{"task": "complete", "input": "name father", "output": "what is father name", "pattern": "complete:what is father name"}
+{"task": "complete", "input": "father name", "output": "what is father name", "pattern": "complete:what is father name"}
+{"task": "complete", "input": "how father", "output": "how is father", "pattern": "complete:how is father"}
+{"task": "complete", "input": "father how", "output": "how is father", "pattern": "complete:how is father"}
+{"task": "complete", "input": "i going home", "output": "i am going home", "pattern": "complete:i am going home"}
+{"task": "complete", "input": "going home i", "output": "i am going home", "pattern": "complete:i am going home"}
+{"task": "restructure", "input": "i driving", "output": "i driving", "pattern": "restructure:i driving"}
+{"task": "restructure", "input": "driving i", "output": "i driving", "pattern": "restructure:i driving"}
+{"task": "restructure", "input": "father laundry", "output": "father laundry", "pattern": "restructure:father laundry"}
+{"task": "restructure", "input": "laundry father", "output": "father laundry", "pattern": "restructure:father laundry"}
+{"task": "restructure", "input": "name his", "output": "name his", "pattern": "restructure:name his"}
+{"task": "restructure", "input": "his name", "output": "name his", "pattern": "restructure:name his"}
+{"task": "restructure", "input": "name me", "output": "name me", "pattern": "restructure:name me"}
+{"task": "restructure", "input": "me name", "output": "name me", "pattern": "restructure:name me"}
+{"task": "restructure", "input": "how she", "output": "how she", "pattern": "restructure:how she"}
+{"task": "restructure", "input": "she how", "output": "how she", "pattern": "restructure:how she"}
+{"task": "restructure", "input": "how father", "output": "how father", "pattern": "restructure:how father"}
+{"task": "restructure", "input": "father how", "output": "how father", "pattern": "restructure:how father"}
+{"task": "restructure", "input": "he fine", "output": "he fine", "pattern": "restructure:he fine"}
+{"task": "restructure", "input": "fine he", "output": "he fine", "pattern": "restructure:he fine"}
+{"task": "restructure", "input": "she going home", "output": "she going home", "pattern": "restructure:she going home"}
+{"task": "restructure", "input": "going home she", "output": "she going home", "pattern": "restructure:she going home"}

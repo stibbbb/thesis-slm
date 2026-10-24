@@ -1,0 +1,294 @@
+{"input": "i am so deaf", "output": "deaf", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:deaf"}
+{"input": "i am very deaf", "output": "deaf", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:deaf"}
+{"input": "i am driving now", "output": "drive", "labels": [0, 0, 1, 0], "question": 0, "pattern": "reduce:drive"}
+{"input": "are you driving at home", "output": "drive home", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:drive home"}
+{"input": "are you still driving at home", "output": "drive home", "labels": [0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:drive home"}
+{"input": "are you still driving at school", "output": "drive school", "labels": [0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:drive school"}
+{"input": "are you driving at school", "output": "drive school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:drive school"}
+{"input": "i am eating now", "output": "eat", "labels": [0, 0, 1, 0], "question": 0, "pattern": "reduce:eat"}
+{"input": "are you still eating at home", "output": "eat home", "labels": [0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:eat home"}
+{"input": "i am eating at home", "output": "eat home", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:eat home"}
+{"input": "i am eating at school", "output": "eat school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:eat school"}
+{"input": "are you eating at school", "output": "eat school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:eat school"}
+{"input": "my family is at bathroom", "output": "family bathroom", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:family bathroom"}
+{"input": "my family is deaf", "output": "family deaf", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family deaf"}
+{"input": "family is deaf", "output": "family deaf", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family deaf"}
+{"input": "your family is driving", "output": "family drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family drive"}
+{"input": "family is driving", "output": "family drive", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family drive"}
+{"input": "my family is eating", "output": "family eat", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family eat"}
+{"input": "is family eating", "output": "family eat", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:family eat"}
+{"input": "family is very fine", "output": "family fine", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family fine"}
+{"input": "family is fine", "output": "family fine", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family fine"}
+{"input": "family is very good", "output": "family good", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family good"}
+{"input": "my family is good", "output": "family good", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family good"}
+{"input": "family is at home", "output": "family home", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family home"}
+{"input": "my family is doing laundry", "output": "family laundry", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:family laundry"}
+{"input": "is family doing laundry", "output": "family laundry", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family laundry"}
+{"input": "your family is learning", "output": "family learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family learn"}
+{"input": "family is learning", "output": "family learn", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family learn"}
+{"input": "your family is sad", "output": "family sad", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family sad"}
+{"input": "family is very sad", "output": "family sad", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family sad"}
+{"input": "family is at school", "output": "family school", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family school"}
+{"input": "family is sick", "output": "family sick", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family sick"}
+{"input": "family is very sick", "output": "family sick", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:family sick"}
+{"input": "my family is studying", "output": "family study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family study"}
+{"input": "family is studying", "output": "family study", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:family study"}
+{"input": "my family is tired", "output": "family tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family tired"}
+{"input": "your family is tired", "output": "family tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:family tired"}
+{"input": "my father is at bathroom", "output": "father bathroom", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:father bathroom"}
+{"input": "my father is deaf", "output": "father deaf", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father deaf"}
+{"input": "father is deaf", "output": "father deaf", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:father deaf"}
+{"input": "my father is driving", "output": "father drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father drive"}
+{"input": "your father is driving", "output": "father drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father drive"}
+{"input": "is father eating", "output": "father eat", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:father eat"}
+{"input": "father is eating", "output": "father eat", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:father eat"}
+{"input": "my father is fine", "output": "father fine", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father fine"}
+{"input": "father is very fine", "output": "father fine", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:father fine"}
+{"input": "father is very good", "output": "father good", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:father good"}
+{"input": "your father is good", "output": "father good", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father good"}
+{"input": "my father is at home", "output": "father home", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:father home"}
+{"input": "is father doing laundry", "output": "father laundry", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father laundry"}
+{"input": "your father is doing laundry", "output": "father laundry", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:father laundry"}
+{"input": "my father is learning", "output": "father learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father learn"}
+{"input": "your father is learning", "output": "father learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father learn"}
+{"input": "father is very sad", "output": "father sad", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:father sad"}
+{"input": "father is sad", "output": "father sad", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:father sad"}
+{"input": "is father at school", "output": "father school", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father school"}
+{"input": "your father is sick", "output": "father sick", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father sick"}
+{"input": "father is very sick", "output": "father sick", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:father sick"}
+{"input": "my father is studying", "output": "father study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father study"}
+{"input": "your father is studying", "output": "father study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father study"}
+{"input": "father is tired", "output": "father tired", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:father tired"}
+{"input": "your father is tired", "output": "father tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:father tired"}
+{"input": "i am still fine", "output": "fine", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:fine"}
+{"input": "i am so fine", "output": "fine", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:fine"}
+{"input": "i finished", "output": "finish", "labels": [0, 1], "question": 0, "pattern": "reduce:finish"}
+{"input": "are you finished", "output": "finish", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:finish"}
+{"input": "friend is at bathroom", "output": "friend bathroom", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:friend bathroom"}
+{"input": "friend is deaf", "output": "friend deaf", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:friend deaf"}
+{"input": "my friend is deaf", "output": "friend deaf", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend deaf"}
+{"input": "your friend is driving", "output": "friend drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend drive"}
+{"input": "my friend is driving", "output": "friend drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend drive"}
+{"input": "friend is eating", "output": "friend eat", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:friend eat"}
+{"input": "is friend eating", "output": "friend eat", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:friend eat"}
+{"input": "your friend is fine", "output": "friend fine", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend fine"}
+{"input": "my friend is fine", "output": "friend fine", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend fine"}
+{"input": "friend is good", "output": "friend good", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:friend good"}
+{"input": "my friend is good", "output": "friend good", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend good"}
+{"input": "is friend at home", "output": "friend home", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend home"}
+{"input": "my friend is doing laundry", "output": "friend laundry", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:friend laundry"}
+{"input": "friend is doing laundry", "output": "friend laundry", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:friend laundry"}
+{"input": "is friend learning", "output": "friend learn", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:friend learn"}
+{"input": "my friend is learning", "output": "friend learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend learn"}
+{"input": "my friend is sad", "output": "friend sad", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend sad"}
+{"input": "friend is very sad", "output": "friend sad", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:friend sad"}
+{"input": "friend is at school", "output": "friend school", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:friend school"}
+{"input": "friend is very sick", "output": "friend sick", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:friend sick"}
+{"input": "my friend is sick", "output": "friend sick", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend sick"}
+{"input": "my friend is studying", "output": "friend study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend study"}
+{"input": "friend is studying", "output": "friend study", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:friend study"}
+{"input": "friend is tired", "output": "friend tired", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:friend tired"}
+{"input": "my friend is tired", "output": "friend tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:friend tired"}
+{"input": "i am good", "output": "good", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:good"}
+{"input": "i am so good", "output": "good", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:good"}
+{"input": "i want help", "output": "help", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:help"}
+{"input": "do you want help", "output": "help", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:help"}
+{"input": "can i help you", "output": "help you", "labels": [0, 0, 1, 2], "question": 0, "pattern": "reduce:help you"}
+{"input": "is family fine", "output": "how family", "labels": [0, 1, 0], "question": 1, "pattern": "reduce:how family"}
+{"input": "how is family", "output": "how family", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:how family"}
+{"input": "how is father", "output": "how father", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:how father"}
+{"input": "is father okay", "output": "how father", "labels": [0, 1, 0], "question": 1, "pattern": "reduce:how father"}
+{"input": "how is my friend", "output": "how friend", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:how friend"}
+{"input": "is friend okay", "output": "how friend", "labels": [0, 1, 0], "question": 1, "pattern": "reduce:how friend"}
+{"input": "is her family okay", "output": "how her family", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how her family"}
+{"input": "how is her family", "output": "how her family", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how her family"}
+{"input": "is her father okay", "output": "how her father", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how her father"}
+{"input": "tell me how her father is", "output": "how her father", "labels": [0, 0, 1, 2, 3, 0], "question": 0, "pattern": "reduce:how her father"}
+{"input": "how is her friend", "output": "how her friend", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how her friend"}
+{"input": "is her friend okay", "output": "how her friend", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how her friend"}
+{"input": "how is her mother doing", "output": "how her mother", "labels": [1, 0, 2, 3, 0], "question": 0, "pattern": "reduce:how her mother"}
+{"input": "is her mother okay", "output": "how her mother", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how her mother"}
+{"input": "is her teacher okay", "output": "how her teacher", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how her teacher"}
+{"input": "how is her teacher", "output": "how her teacher", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how her teacher"}
+{"input": "is his family okay", "output": "how his family", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how his family"}
+{"input": "how is his family", "output": "how his family", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how his family"}
+{"input": "how is his father", "output": "how his father", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how his father"}
+{"input": "tell me how his father is", "output": "how his father", "labels": [0, 0, 1, 2, 3, 0], "question": 0, "pattern": "reduce:how his father"}
+{"input": "how is his friend doing", "output": "how his friend", "labels": [1, 0, 2, 3, 0], "question": 0, "pattern": "reduce:how his friend"}
+{"input": "how is his friend", "output": "how his friend", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how his friend"}
+{"input": "is his mother okay", "output": "how his mother", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how his mother"}
+{"input": "how is his mother doing", "output": "how his mother", "labels": [1, 0, 2, 3, 0], "question": 0, "pattern": "reduce:how his mother"}
+{"input": "is his teacher okay", "output": "how his teacher", "labels": [0, 1, 2, 0], "question": 1, "pattern": "reduce:how his teacher"}
+{"input": "how is his teacher", "output": "how his teacher", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:how his teacher"}
+{"input": "how is mother", "output": "how mother", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:how mother"}
+{"input": "how is my mother", "output": "how mother", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:how mother"}
+{"input": "is teacher okay", "output": "how teacher", "labels": [0, 1, 0], "question": 1, "pattern": "reduce:how teacher"}
+{"input": "how is your teacher", "output": "how teacher", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:how teacher"}
+{"input": "are you fine", "output": "how you", "labels": [0, 1, 0], "question": 1, "pattern": "reduce:how you"}
+{"input": "how are you doing", "output": "how you", "labels": [1, 0, 2, 0], "question": 0, "pattern": "reduce:how you"}
+{"input": "i am still doing laundry", "output": "laundry", "labels": [0, 0, 0, 0, 1], "question": 0, "pattern": "reduce:laundry"}
+{"input": "i am doing laundry at home now", "output": "laundry home", "labels": [0, 0, 0, 1, 0, 2, 0], "question": 0, "pattern": "reduce:laundry home"}
+{"input": "are you still doing laundry at home", "output": "laundry home", "labels": [0, 0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:laundry home"}
+{"input": "i am doing laundry at school now", "output": "laundry school", "labels": [0, 0, 0, 1, 0, 2, 0], "question": 0, "pattern": "reduce:laundry school"}
+{"input": "i am doing laundry at school", "output": "laundry school", "labels": [0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:laundry school"}
+{"input": "i am learning", "output": "learn", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:learn"}
+{"input": "i am learning at home", "output": "learn home", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:learn home"}
+{"input": "are you still learning at home", "output": "learn home", "labels": [0, 0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:learn home"}
+{"input": "i am learning at school now", "output": "learn school", "labels": [0, 0, 1, 0, 2, 0], "question": 0, "pattern": "reduce:learn school"}
+{"input": "i am learning at school", "output": "learn school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:learn school"}
+{"input": "is mother at bathroom", "output": "mother bathroom", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother bathroom"}
+{"input": "your mother is deaf", "output": "mother deaf", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother deaf"}
+{"input": "mother is very deaf", "output": "mother deaf", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:mother deaf"}
+{"input": "my mother is driving", "output": "mother drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother drive"}
+{"input": "is mother driving", "output": "mother drive", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:mother drive"}
+{"input": "my mother is eating", "output": "mother eat", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother eat"}
+{"input": "your mother is eating", "output": "mother eat", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother eat"}
+{"input": "my mother is fine", "output": "mother fine", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother fine"}
+{"input": "mother is very fine", "output": "mother fine", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:mother fine"}
+{"input": "your mother is good", "output": "mother good", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother good"}
+{"input": "mother is very good", "output": "mother good", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:mother good"}
+{"input": "my mother is at home", "output": "mother home", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:mother home"}
+{"input": "mother is doing laundry", "output": "mother laundry", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:mother laundry"}
+{"input": "your mother is doing laundry", "output": "mother laundry", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:mother laundry"}
+{"input": "my mother is learning", "output": "mother learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother learn"}
+{"input": "is mother learning", "output": "mother learn", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:mother learn"}
+{"input": "your mother is sad", "output": "mother sad", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother sad"}
+{"input": "mother is sad", "output": "mother sad", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:mother sad"}
+{"input": "my mother is at school", "output": "mother school", "labels": [0, 1, 0, 0, 2], "question": 0, "pattern": "reduce:mother school"}
+{"input": "mother is sick", "output": "mother sick", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:mother sick"}
+{"input": "my mother is sick", "output": "mother sick", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother sick"}
+{"input": "my mother is studying", "output": "mother study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother study"}
+{"input": "mother is studying", "output": "mother study", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:mother study"}
+{"input": "my mother is tired", "output": "mother tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:mother tired"}
+{"input": "mother is very tired", "output": "mother tired", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:mother tired"}
+{"input": "very nice to meet you", "output": "nice", "labels": [0, 1, 0, 0, 0], "question": 0, "pattern": "reduce:nice"}
+{"input": "it is nice to meet you", "output": "nice", "labels": [0, 0, 1, 0, 0, 0], "question": 0, "pattern": "reduce:nice"}
+{"input": "please help me", "output": "please help", "labels": [1, 2, 0], "question": 0, "pattern": "reduce:please help"}
+{"input": "i am still sad", "output": "sad", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:sad"}
+{"input": "i am very sad", "output": "sad", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:sad"}
+{"input": "i am still sick", "output": "sick", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:sick"}
+{"input": "i am so sick", "output": "sick", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:sick"}
+{"input": "i am really sorry", "output": "sorry", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:sorry"}
+{"input": "i am studying", "output": "study", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:study"}
+{"input": "i am studying at home now", "output": "study home", "labels": [0, 0, 1, 0, 2, 0], "question": 0, "pattern": "reduce:study home"}
+{"input": "i am studying at home", "output": "study home", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:study home"}
+{"input": "i am studying at school", "output": "study school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:study school"}
+{"input": "are you studying at school", "output": "study school", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:study school"}
+{"input": "teacher is at bathroom", "output": "teacher bathroom", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher bathroom"}
+{"input": "teacher is very deaf", "output": "teacher deaf", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher deaf"}
+{"input": "teacher is deaf", "output": "teacher deaf", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:teacher deaf"}
+{"input": "is teacher driving", "output": "teacher drive", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:teacher drive"}
+{"input": "your teacher is driving", "output": "teacher drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher drive"}
+{"input": "teacher is eating", "output": "teacher eat", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:teacher eat"}
+{"input": "your teacher is eating", "output": "teacher eat", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher eat"}
+{"input": "teacher is very fine", "output": "teacher fine", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher fine"}
+{"input": "my teacher is fine", "output": "teacher fine", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher fine"}
+{"input": "teacher is very good", "output": "teacher good", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher good"}
+{"input": "my teacher is good", "output": "teacher good", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher good"}
+{"input": "is teacher at home", "output": "teacher home", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher home"}
+{"input": "teacher is doing laundry", "output": "teacher laundry", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher laundry"}
+{"input": "is teacher doing laundry", "output": "teacher laundry", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher laundry"}
+{"input": "my teacher is learning", "output": "teacher learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher learn"}
+{"input": "teacher is learning", "output": "teacher learn", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:teacher learn"}
+{"input": "teacher is very sad", "output": "teacher sad", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher sad"}
+{"input": "your teacher is sad", "output": "teacher sad", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher sad"}
+{"input": "teacher is at school", "output": "teacher school", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:teacher school"}
+{"input": "my teacher is sick", "output": "teacher sick", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher sick"}
+{"input": "teacher is sick", "output": "teacher sick", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:teacher sick"}
+{"input": "teacher is studying", "output": "teacher study", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:teacher study"}
+{"input": "my teacher is studying", "output": "teacher study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher study"}
+{"input": "my teacher is tired", "output": "teacher tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher tired"}
+{"input": "your teacher is tired", "output": "teacher tired", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:teacher tired"}
+{"input": "i am still tired", "output": "tired", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:tired"}
+{"input": "i am very tired", "output": "tired", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:tired"}
+{"input": "do you understand", "output": "understand", "labels": [0, 0, 1], "question": 0, "pattern": "reduce:understand"}
+{"input": "i do not understand", "output": "understand", "labels": [0, 0, 0, 1], "question": 0, "pattern": "reduce:understand"}
+{"input": "do you want to go to the bathroom", "output": "want bathroom", "labels": [0, 0, 1, 0, 0, 0, 0, 2], "question": 0, "pattern": "reduce:want bathroom"}
+{"input": "i want to go to the bathroom", "output": "want bathroom", "labels": [0, 1, 0, 0, 0, 0, 2], "question": 0, "pattern": "reduce:want bathroom"}
+{"input": "do you want to drive", "output": "want drive", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:want drive"}
+{"input": "i want to drive", "output": "want drive", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want drive"}
+{"input": "do you want to eat", "output": "want eat", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:want eat"}
+{"input": "i need to eat", "output": "want eat", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want eat"}
+{"input": "do you need the home", "output": "want home", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:want home"}
+{"input": "i need to go to the home", "output": "want home", "labels": [0, 1, 0, 0, 0, 0, 2], "question": 0, "pattern": "reduce:want home"}
+{"input": "i want to laundry", "output": "want laundry", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want laundry"}
+{"input": "i need to laundry", "output": "want laundry", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want laundry"}
+{"input": "do you need to learn", "output": "want learn", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:want learn"}
+{"input": "i need to learn", "output": "want learn", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want learn"}
+{"input": "do you want to go to the school", "output": "want school", "labels": [0, 0, 1, 0, 0, 0, 0, 2], "question": 0, "pattern": "reduce:want school"}
+{"input": "i want to go to the school", "output": "want school", "labels": [0, 1, 0, 0, 0, 0, 2], "question": 0, "pattern": "reduce:want school"}
+{"input": "do you need to study", "output": "want study", "labels": [0, 0, 1, 0, 2], "question": 0, "pattern": "reduce:want study"}
+{"input": "i want to study", "output": "want study", "labels": [0, 1, 0, 2], "question": 0, "pattern": "reduce:want study"}
+{"input": "i want water", "output": "want water", "labels": [0, 1, 2], "question": 0, "pattern": "reduce:want water"}
+{"input": "when will you drive", "output": "when you drive", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you drive"}
+{"input": "when are you driving", "output": "when you drive", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you drive"}
+{"input": "when will you eat", "output": "when you eat", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you eat"}
+{"input": "when are you eating", "output": "when you eat", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you eat"}
+{"input": "tell me when you laundry", "output": "when you laundry", "labels": [0, 0, 1, 2, 3], "question": 0, "pattern": "reduce:when you laundry"}
+{"input": "when do you laundry", "output": "when you laundry", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you laundry"}
+{"input": "when are you learning", "output": "when you learn", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you learn"}
+{"input": "tell me when you learn", "output": "when you learn", "labels": [0, 0, 1, 2, 3], "question": 0, "pattern": "reduce:when you learn"}
+{"input": "when will you study", "output": "when you study", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you study"}
+{"input": "when do you study", "output": "when you study", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:when you study"}
+{"input": "where is bathroom", "output": "where bathroom", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:where bathroom"}
+{"input": "where is family", "output": "where family", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:where family"}
+{"input": "where is my father", "output": "where father", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:where father"}
+{"input": "where is friend", "output": "where friend", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:where friend"}
+{"input": "where is the home", "output": "where home", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:where home"}
+{"input": "where is mother", "output": "where mother", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:where mother"}
+{"input": "where is the school", "output": "where school", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:where school"}
+{"input": "where is teacher", "output": "where teacher", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:where teacher"}
+{"input": "who is family", "output": "who family", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:who family"}
+{"input": "who is father", "output": "who father", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:who father"}
+{"input": "who is your friend", "output": "who friend", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:who friend"}
+{"input": "who is my mother", "output": "who mother", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:who mother"}
+{"input": "who is my teacher", "output": "who teacher", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:who teacher"}
+{"input": "why is your family deaf", "output": "why family deaf", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why family deaf"}
+{"input": "why is my family fine", "output": "why family fine", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why family fine"}
+{"input": "why is my family good", "output": "why family good", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why family good"}
+{"input": "why is my family sad", "output": "why family sad", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why family sad"}
+{"input": "why is family sick", "output": "why family sick", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why family sick"}
+{"input": "why is family tired", "output": "why family tired", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why family tired"}
+{"input": "why is your father deaf", "output": "why father deaf", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why father deaf"}
+{"input": "why is your father fine", "output": "why father fine", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why father fine"}
+{"input": "why is father good", "output": "why father good", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why father good"}
+{"input": "why is father sad", "output": "why father sad", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why father sad"}
+{"input": "why is my father sick", "output": "why father sick", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why father sick"}
+{"input": "why is your father tired", "output": "why father tired", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why father tired"}
+{"input": "why is your friend deaf", "output": "why friend deaf", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend deaf"}
+{"input": "why is my friend fine", "output": "why friend fine", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend fine"}
+{"input": "why is my friend good", "output": "why friend good", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend good"}
+{"input": "why is your friend sad", "output": "why friend sad", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend sad"}
+{"input": "why is my friend sick", "output": "why friend sick", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend sick"}
+{"input": "why is your friend tired", "output": "why friend tired", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why friend tired"}
+{"input": "why is mother deaf", "output": "why mother deaf", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why mother deaf"}
+{"input": "why is your mother fine", "output": "why mother fine", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why mother fine"}
+{"input": "why is mother good", "output": "why mother good", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why mother good"}
+{"input": "why is mother sad", "output": "why mother sad", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why mother sad"}
+{"input": "why is mother sick", "output": "why mother sick", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why mother sick"}
+{"input": "why is your mother tired", "output": "why mother tired", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why mother tired"}
+{"input": "why is my teacher deaf", "output": "why teacher deaf", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher deaf"}
+{"input": "why is teacher fine", "output": "why teacher fine", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher fine"}
+{"input": "why is teacher good", "output": "why teacher good", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher good"}
+{"input": "why is my teacher sad", "output": "why teacher sad", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher sad"}
+{"input": "why is my teacher sick", "output": "why teacher sick", "labels": [1, 0, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher sick"}
+{"input": "why is teacher tired", "output": "why teacher tired", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why teacher tired"}
+{"input": "why are you so deaf", "output": "why you deaf", "labels": [1, 0, 2, 0, 3], "question": 0, "pattern": "reduce:why you deaf"}
+{"input": "why you are deaf", "output": "why you deaf", "labels": [1, 2, 0, 3], "question": 0, "pattern": "reduce:why you deaf"}
+{"input": "why are you so fine", "output": "why you fine", "labels": [1, 0, 2, 0, 3], "question": 0, "pattern": "reduce:why you fine"}
+{"input": "why are you fine", "output": "why you fine", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why you fine"}
+{"input": "why are you good", "output": "why you good", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why you good"}
+{"input": "why you are good", "output": "why you good", "labels": [1, 2, 0, 3], "question": 0, "pattern": "reduce:why you good"}
+{"input": "tell me why you are sad", "output": "why you sad", "labels": [0, 0, 1, 2, 0, 3], "question": 0, "pattern": "reduce:why you sad"}
+{"input": "why are you so sad", "output": "why you sad", "labels": [1, 0, 2, 0, 3], "question": 0, "pattern": "reduce:why you sad"}
+{"input": "why are you sick", "output": "why you sick", "labels": [1, 0, 2, 3], "question": 0, "pattern": "reduce:why you sick"}
+{"input": "why are you so sick", "output": "why you sick", "labels": [1, 0, 2, 0, 3], "question": 0, "pattern": "reduce:why you sick"}
+{"input": "why are you so tired", "output": "why you tired", "labels": [1, 0, 2, 0, 3], "question": 0, "pattern": "reduce:why you tired"}
+{"input": "why you are tired", "output": "why you tired", "labels": [1, 2, 0, 3], "question": 0, "pattern": "reduce:why you tired"}
+{"input": "yes i do", "output": "yes", "labels": [1, 0, 0], "question": 0, "pattern": "reduce:yes"}
+{"input": "you are deaf", "output": "you deaf", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:you deaf"}
+{"input": "you are very fine", "output": "you fine", "labels": [1, 0, 0, 2], "question": 0, "pattern": "reduce:you fine"}
+{"input": "you look good", "output": "you good", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:you good"}
+{"input": "you are sad", "output": "you sad", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:you sad"}
+{"input": "you look sick", "output": "you sick", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:you sick"}
+{"input": "you look tired", "output": "you tired", "labels": [1, 0, 2], "question": 0, "pattern": "reduce:you tired"}

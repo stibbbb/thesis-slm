@@ -1,0 +1,109 @@
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "father drive", "output": "Father is driving."}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where father", "output": "where father"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how mother", "output": "How is mother?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Mother.", "output": "mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "fine how", "output": "how fine"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "I am fine at home.", "output": "fine home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father where home", "output": "where father home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where mother", "output": "Where is mother?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Is father home?", "output": "father home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where are you doing laundry?", "output": "where laundry"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "fine home", "output": "fine home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother father home", "output": "Are mother and father home?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother how", "output": "how mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father mother drive", "output": "mother father drive"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home where father", "output": "where father home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother name", "output": "mother name"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home fine", "output": "fine home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "I am going home.", "output": "home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother laundry home", "output": "mother is doing laundry at home."}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "how father", "output": "how father"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother laundry home", "output": "mother laundry home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "fine father how", "output": "how father fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "name mother", "output": "mother name"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Are mother and father home?", "output": "mother father home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how father", "output": "How is father?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father how", "output": "how father"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "drive", "output": "I am driving."}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where mother drive", "output": "Where is mother? Is she driving?"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where mother home", "output": "Where is mother? Is she home?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "What is your name?", "output": "name"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father how fine", "output": "how father fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home mother where", "output": "where mother home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where mother drive", "output": "where mother drive"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother father drive", "output": "Are mother and father driving?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home where", "output": "where home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother father drive", "output": "mother father drive"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where laundry", "output": "where laundry"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where home", "output": "Where is home?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where father home", "output": "where father home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father drive mother", "output": "mother father drive"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "fine home", "output": "I am fine at home."}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother", "output": "Mother."}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where laundry", "output": "Where are you doing laundry?"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where drive", "output": "Where are you driving?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "drive mother where", "output": "where mother drive"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How are you?", "output": "how"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Mother is doing laundry.", "output": "mother laundry"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home father mother", "output": "mother father home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where are you?", "output": "where"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "What is father name?", "output": "father name"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "drive where", "output": "where drive"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How is father?", "output": "how father"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is mother? Is she driving?", "output": "where mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "how fine", "output": "how fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where mother", "output": "where mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother how fine", "output": "how mother fine"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where father", "output": "Where is father?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father home", "output": "father home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where", "output": "Where are you?"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "father", "output": "Father."}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Father is driving.", "output": "father"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home father", "output": "father home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how", "output": "How are you?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "laundry mother", "output": "mother laundry"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father drive", "output": "father drive"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother father home", "output": "mother father home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How is father? Is he fine?", "output": "how father fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home mother father", "output": "mother father home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "laundry where", "output": "where laundry"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home laundry mother", "output": "mother laundry home"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how father fine", "output": "How is father? Is he fine?"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "name", "output": "What is your name?"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother laundry", "output": "Mother is doing laundry."}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Are mother and father driving?", "output": "mother father"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how fine", "output": "How are you? I am fine."}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is home?", "output": "where home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where mother home", "output": "where mother home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "mother is doing laundry at home.", "output": "mother laundry home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "name father", "output": "father name"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "father home", "output": "Is father home?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How is mother?", "output": "how mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where drive", "output": "where drive"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father where", "output": "where father"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is father?", "output": "where father"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where are you driving?", "output": "where"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "home", "output": "I am going home."}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is mother?", "output": "where mother"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "where father home", "output": "Where is father? Is he home?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How is mother? Is she fine?", "output": "how mother fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother laundry", "output": "mother laundry"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "father name", "output": "What is father name?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is father? Is he home?", "output": "where father home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "how mother fine", "output": "how mother fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "how mother", "output": "how mother"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "how mother fine", "output": "How is mother? Is she fine?"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Father.", "output": "father"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "Where is mother? Is she home?", "output": "where mother home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "where home", "output": "where home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "What is mother name?", "output": "mother name"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "father name", "output": "father name"}
+{"task": "complete", "instruction": "Convert these ordered sign tokens into a complete natural sentence.", "input": "mother name", "output": "What is mother name?"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "fine how mother", "output": "how mother fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home mother laundry", "output": "mother laundry home"}
+{"task": "reduce", "instruction": "Reduce this sentence to simple sign-vocabulary keywords.", "input": "How are you? I am fine.", "output": "how fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "how father fine", "output": "how father fine"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "home where mother", "output": "where mother home"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother where", "output": "where mother"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "drive father", "output": "father drive"}
+{"task": "restructure", "instruction": "Restructure these sign tokens into the correct grammatical order.", "input": "mother where drive", "output": "where mother drive"}

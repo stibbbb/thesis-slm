@@ -1,0 +1,17 @@
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: apple, water", "output": "I want an apple and some water."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: run, happy", "output": "I went for a run and I feel happy."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: blue, water", "output": "The water looks blue today."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: happy, run", "output": "Running makes me happy."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: apple, happy", "output": "Eating an apple makes me happy."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: blue, happy", "output": "I feel happy when I see the color blue."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: water, run", "output": "I drank water before my run."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: apple", "output": "I would like an apple."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: water", "output": "I need some water."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: run", "output": "I want to go for a run."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: blue", "output": "I like the color blue."}
+{"instruction": "Convert these recognized sign tokens into a natural sentence. Tokens: happy", "output": "I am happy."}
+{"instruction": "Reformat this transcribed speech for clear display.", "input": "uh hey whats your name", "output": "Hey, what's your name?"}
+{"instruction": "Reformat this transcribed speech for clear display.", "input": "do you want some water", "output": "Do you want some water?"}
+{"instruction": "Reformat this transcribed speech for clear display.", "input": "im going for a run later", "output": "I'm going for a run later."}
+{"instruction": "Reformat this transcribed speech for clear display.", "input": "that apple looks really good", "output": "That apple looks really good."}
+{"instruction": "Reformat this transcribed speech for clear display.", "input": "are you happy today", "output": "Are you happy today?"}

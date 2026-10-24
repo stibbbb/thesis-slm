@@ -1,0 +1,28 @@
+import os
+os.environ["HF_HUB_DOWNLOAD_TIMEOUT"] = "60"
+import sys
+
+print("CP1: starting script", flush=True)
+
+import torch
+print("CP2: torch imported", flush=True)
+
+from datasets import load_dataset
+print("CP3: datasets imported", flush=True)
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+print("CP4: transformers imported", flush=True)
+
+from peft import LoraConfig, get_peft_model
+print("CP5: peft imported", flush=True)
+
+from trl import SFTTrainer, SFTConfig
+print("CP6: trl imported", flush=True)
+
+MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
+
+print("CP7: loading tokenizer", flush=True)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+print("CP8: tokenizer loaded", flush=True)
+
+print("STOPPING HERE ON PURPOSE - SCRIPT END", flush=True)
