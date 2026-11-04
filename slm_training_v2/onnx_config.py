@@ -41,10 +41,13 @@ GLOSS_MAP = {
     "mama": "mother", "papa": "father",
     "mom": "mother", "mommy": "mother", "ma": "mother",
     "dad": "father", "daddy": "father", "pa": "father",
+    "parents": "parent",
 
     # --- place / object synonyms
     "house": "home", "residence": "home",
     "classroom": "class", "classes": "class",
+    "cellphone": "phone", "cell": "phone", "mobile": "phone", "phones": "phone",
+    "people": "person",
 
     # --- state synonyms  (NOTE: "good" is excluded -- it is its own sign)
     "okay": "fine", "alright": "fine", "great": "fine",
@@ -53,15 +56,19 @@ GLOSS_MAP = {
     "studying": "study", "studies": "study", "studied": "study",
     "eating": "eat", "eats": "eat", "ate": "eat",
     "learning": "learn", "learns": "learn", "learned": "learn",
+    "sleeping": "sleep", "sleeps": "sleep", "slept": "sleep",
+    "going": "go", "goes": "go", "went": "go",
+    "wants": "want", "wanted": "want", "wanna": "want",
+    "signing": "sign", "signs": "sign", "signed": "sign",
     "does": "doing", "do": "doing",
-    "go": "going",
 
     # --- possessive / pronoun forms
     "your": "you",
     "me": "my", "mine": "my",
 
-    # --- greetings and time
+    # --- greetings, thanks and time
     "hi": "hello", "hey": "hello",
+    "thanks": "thank", "thank_you": "thank",
     "tmrw": "tomorrow", "tonight": "today",
 }
 

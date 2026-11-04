@@ -31,7 +31,7 @@ Run: python Conversation_test.py
 import copy
 import json
 
-from slm_pipeline import REPAIR_SENTENCE, SIGNS, SLMPipeline
+from slm_pipeline import REPAIR_SENTENCE, SIGN_NAMES, SIGNS, SLMPipeline
 
 # (title, context the dialogue should be in, [(who, text)])
 #   who = "speak": the hearing person;  "sign": the Deaf person
@@ -57,32 +57,42 @@ DIALOGUES = [
         ("sign",  "how you today"),
         ("sign",  "you here"),
         ("speak", "where is your mother"),
-        ("sign",  "mother home"),
+        ("sign",  "parent home"),
         ("sign",  "where water"),
+        ("speak", "where were you yesterday"),
+        ("sign",  "go school yesterday"),
     ]),
     ("Greeting", "greeting", [
         ("speak", "hello"),
         ("sign",  "hello nice friend"),
         ("speak", "nice to meet you"),
         ("sign",  "my deaf"),
+        ("sign",  "person deaf"),
     ]),
     ("Courtesy", "courtesy", [
         ("speak", "sorry"),
         ("sign",  "sorry"),
         ("speak", "please"),
         ("sign",  "yes please"),
+        ("speak", "thank you"),
+        ("sign",  "thank help"),
     ]),
     ("Home and family", "home and family", [
         ("speak", "is your family at home"),
         ("sign",  "family home"),
         ("speak", "it is time to eat"),
         ("sign",  "eat now"),
+        ("sign",  "parent sleep"),
+        ("sign",  "my phone"),
+        ("speak", "do you want to eat"),
+        ("sign",  "want eat"),
+        ("sign",  "want parent here now"),
     ]),
     ("Feelings", "feelings", [
         ("speak", "how are you"),
         ("sign",  "fine"),
         ("speak", "you are good"),
-        ("sign",  "father good"),
+        ("sign",  "parent good"),
     ]),
 ]
 # turns whose topic is expected to differ from the dialogue's context
@@ -92,7 +102,7 @@ EXPECTED_TOPIC = {("Feelings", 0): None}
 MIXED = [
     ("speak", "are you studying at school", "school and learning"),
     ("sign",  "teacher study tomorrow",     "school and learning"),  # tomorrow leaks in
-    ("sign",  "teacher class mother",       "school and learning"),  # mother leaks in
+    ("sign",  "teacher class parent",       "school and learning"),  # parent leaks in
     ("sign",  "teacher family eat home",    "home and family"),      # 3 of 4: switch
     ("speak", "is your father at home",     "home and family"),
     ("sign",  "not understand",             "help and repair"),      # repair rule
@@ -123,7 +133,7 @@ def main():
     ref = load_reference()
 
     print("=" * 86)
-    print("  CONVERSATION TEST  ·  seven contexts from the interviews")
+    print("  CONVERSATION TEST  Â·  seven contexts from the interviews")
     print(f"  {len(SIGNS)} signs   |   device: {slm.device}")
     print("=" * 86)
 
@@ -157,6 +167,8 @@ def main():
                 expected = ref.get(("complete", text))
             else:
                 expected = ref.get(("reduce", text.lower()))
+                if expected is not None:   # the Deaf screen shows each sign by its name
+                    expected = " ".join(SIGN_NAMES.get(w, w) for w in expected.split())
             if fresh.rstrip("?.") == REPAIR_SENTENCE:
                 verdict = "RULE"
             elif expected is None:

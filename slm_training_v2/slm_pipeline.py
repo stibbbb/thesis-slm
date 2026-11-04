@@ -15,7 +15,7 @@ paths are non_deaf_to_deaf() and deaf_to_non_deaf(). Each returns a Turn:
 the text for the reader's screen plus what every box produced, in order,
 so a demo can show the whole path.
 
-Trained models (weights unchanged, nothing retrained):
+Trained models (retrained for the 44 signs):
     trained_picker.pt     word picker: Embedding, Contextualize and
                           Space Restriction for hearing -> Deaf
     trained_tinyllama.pt  TinyLlama:   Embedding and Sentence Completion
@@ -43,7 +43,7 @@ PICKER_PATH = "trained_picker.pt"
 DECODER_PATH = "trained_tinyllama.pt"
 
 LOOKUP_TABLE = set(ALL_VOCAB)       # every word the SLM knows: the signs + helper words
-SIGNS = set(CONFIRMED_GESTURES)     # the 34 signs a Deaf reader can be shown
+SIGNS = set(CONFIRMED_GESTURES)     # the 44 signs a Deaf reader can be shown
 MAX_WORDS = 16                      # the models' position limit
 
 PEOPLE = {w for w, c in CATEGORIES.items() if c == "Person / Family"}
@@ -51,6 +51,25 @@ QUESTIONS = {w for w, c in CATEGORIES.items() if c == "Basic Question"}
 STATES = {w for w, c in CATEGORIES.items() if c == "Response / State"}
 ACTIVITIES = {w for w, c in CATEGORIES.items() if c == "Daily Activity"}
 PLACES = {w for w, c in CATEGORIES.items() if c == "Location / Place"}
+
+# Signs Sentence Completion may add on its own: signers point instead of
+# signing "you"/"my", TIME alone asks "what time is it", and a place with
+# a time already means going there ("school tomorrow" -> "i will go to
+# school tomorrow"). Any other sign in the sentence names something nobody
+# signed ("yes eat" -> "yes father is eating"), so the safety net shows
+# the signs instead.
+ADDABLE_SIGNS = {"you", "my", "what", "go"}
+
+# THANK YOU is one sign, glossed "thank": a recognizer label or typed
+# "thank you" is that one sign, not THANK + YOU. The Deaf screen shows
+# the sign by its name.
+THANK_YOU = re.compile(r"\bthank[ _]you\b", re.IGNORECASE)
+SIGN_NAMES = {"thank": "thank you"}
+
+# The camera cannot tell MOTHER from FATHER (group decision), so on the
+# Deaf -> hearing path both are the one sign PARENT. The hearing person's
+# "mother" and "father" are still shown as said on the Deaf screen.
+CAMERA_SIGN = {"mother": "parent", "father": "parent"}
 
 # Spoken short forms, written out the way the training sentences are.
 CONTRACTIONS = {
@@ -69,18 +88,28 @@ CONTRACTIONS = {
 # "good" is not shown as the sign GOOD (which says how someone is).
 GREETING_PHRASES = re.compile(r"\bgood (morning|afternoon|evening|night)\b")
 
-# Punctuation is shown only to the hearing reader (Deaf -> hearing): the
-# Deaf reader's screen stays plain signs. A sentence that starts with one
-# of these is a question and ends with "?"; any other ends with ".".
+# The hearing reader gets full punctuation (Deaf -> hearing). The Deaf
+# reader's screen stays plain signs, except a "?" when the hearing person
+# asked a question. A sentence that starts with one of these is a question
+# and ends with "?"; any other ends with ".".
 QUESTION_STARTERS = {"are", "is", "am", "do", "does", "did", "can", "could", "will", "would",
                      "was", "were", "what", "where", "why", "how", "who", "when"}
 
-# Which remembered person "he" / "she" can point to. Teacher and friend
-# can be either; family is plural, so neither pronoun refers to it.
+# Which remembered person "he" / "she" can point to. Teacher, friend and
+# person can be either; family is plural, so neither pronoun refers to it.
 PRONOUN_FITS = {
-    "he": {"father", "teacher", "friend"},
-    "she": {"mother", "teacher", "friend"},
+    "he": {"father", "teacher", "friend", "person", "parent"},
+    "she": {"mother", "teacher", "friend", "person", "parent"},
 }
+
+# A bare place answering "where ...?" is said the way people answer it:
+# "at school", or "to school" when the question was about going there.
+PLACE_ANSWER = {"home": "home", "school": "at school", "class": "in class", "here": "here"}
+PLACE_GOAL = {"home": "home", "school": "to school", "class": "to class", "here": "here"}
+
+# FINE or GOOD alone after something that did not ask how anyone is only
+# agrees with it ("mother is home." -> "okay").
+AGREEMENT = {"fine": "okay", "good": "good"}
 
 # A sign counts as present in a sentence under these spellings too:
 # the self-sign "my" appears as "i am", and "you" as "your" or "are".
@@ -88,16 +117,16 @@ COVER_FORMS = {"my": {"my", "i", "me", "am"}, "you": {"you", "your", "are"}}
 
 # The seven conversation contexts from the deaf students' interviews
 # ("[SLM] Data Interpretation", Possible Contexts), each with its trigger
-# signs, in the order listed there (that order breaks the last ties). NOT, GO,
-# SIGN, THANK YOU and SLEEP are not recorded as signs yet; they are listed
-# so they work as soon as the recognizer can produce them.
+# signs, in the order listed there (that order breaks the last ties).
+# THANK YOU is the sign "thank".
 TOPICS = {
     "help and repair": {"help", "please", "understand", "again", "not"},
     "school and learning": {"study", "learn", "teacher", "class", "school"},
-    "whereabouts and plans": {"where", "school", "home", "now", "today", "tomorrow", "go", "going"},
+    "whereabouts and plans": {"where", "school", "home", "now", "today", "tomorrow", "yesterday",
+                              "go"},
     "greeting": {"hello", "nice", "friend", "deaf", "sign"},
     "courtesy": {"sorry", "please", "thank"},
-    "home and family": {"mother", "father", "family", "home", "eat", "time", "sleep"},
+    "home and family": {"mother", "father", "parent", "family", "home", "eat", "time", "sleep"},
     "feelings": {"fine", "good"},
 }
 REPAIR_TOPIC = "help and repair"
@@ -120,7 +149,10 @@ REPAIR_SENTENCE = "i do not understand please say it again or write it"
 SIGN_CONFIDENCE_THRESHOLD = 0.6
 
 # A signed NOT goes after the first of these: "i am fine" -> "i am not fine".
-HELPER_VERBS = {"am", "is", "are", "was", "were", "will", "can", "do", "does"}
+HELPER_VERBS = {"am", "is", "are", "was", "were", "will", "can", "do", "does", "did"}
+# ... or turns a past verb into "did not" + the sign: "i ate" -> "i did not eat".
+PAST_FORMS = {"went": "go", "ate": "eat", "studied": "study", "learned": "learn", "slept": "sleep",
+              "signed": "sign"}
 
 
 class Turn:
@@ -141,6 +173,8 @@ class ActiveContext:
     person               the last person mentioned (mother, father, ...)
     last_was_question    the hearing person's last turn was a question
     last_question_words  which question words it used (where, how, ...)
+    last_heard           every word of the hearing person's last turn, as signs ("going" -> go)
+    last_said            the same words exactly as spoken ("going")
     addressed_to_you     that turn was asked to the Deaf person ("how are you")
     topic                the active conversation context (one of TOPICS), or None
     topic_weights        how present each of the seven contexts is (0 to 1)
@@ -153,6 +187,8 @@ class ActiveContext:
         self.person = None
         self.last_was_question = False
         self.last_question_words = set()
+        self.last_heard = set()
+        self.last_said = set()
         self.addressed_to_you = False
         self.topic = None
         self.topic_weights = dict.fromkeys(TOPICS, 0.0)
@@ -229,6 +265,8 @@ class ActiveContext:
         yes/no question ("is your mother here?"), so the Deaf reply is
         written as a statement too ("mother is home", not "is mother home")."""
         words = [normalize_word(w) for w in spoken_words] + list(glosses)
+        self.last_heard = set(words)
+        self.last_said = set(spoken_words)
         self.last_question_words = {w for w in words if w in QUESTIONS}
         self.last_was_question = bool(self.last_question_words) or asked
         # Only the word "you" itself means the question was asked to the
@@ -263,11 +301,15 @@ class ActiveContext:
         about_a_person = (
             # a question with nothing else to ask about: "where", "how", "why fine"
             (any(s in QUESTIONS for s in signs) and all(s in STATES for s in others))
-            # how someone is: "fine" after "how is your mother?"
+            # how someone is: "fine" after "how is your mother?" (after
+            # "mother is home." FINE only agrees, see agreement())
             or (any(s in STATES for s in signs)
-                and not any(s in ACTIVITIES for s in signs))
-            # a bare place answering "where is ...?" is about that person
-            or ("where" in self.last_question_words
+                and not any(s in ACTIVITIES for s in signs)
+                and self.asked_how() and self.person in self.last_heard)
+            # a bare place answering a question about that person is about
+            # them: "where is mother?" / "is mother home?" + SCHOOL
+            # ("where is the water?" + HOME is about the water)
+            or (self.last_was_question and self.person in self.last_heard
                 and all(s in PLACES for s in signs))
         )
         if not about_a_person:
@@ -276,13 +318,52 @@ class ActiveContext:
             return signs, None, "this turn does not need a subject"
         if self.addressed_to_you:
             return signs, None, "the last question was asked to the Deaf person"
-        return [self.person] + signs, self.person, f"added {self.person!r} from earlier"
+        person = CAMERA_SIGN.get(self.person, self.person)   # "mother" was heard: PARENT
+        return [person] + signs, person, f"added {person!r} from earlier"
+
+    def short_answer(self, signs):
+        """A reply the hearing person's last turn already explains is shown
+        short, the way people answer, instead of a made-up full sentence:
+        - bare places answering "where ...?": "where do you want to eat?" +
+          SCHOOL -> "at school" (not "i am at school"), "where are you
+          going?" + HOME -> "home"
+        - one place or activity repeating what was just said: "are you going
+          to school tomorrow?" + SCHOOL -> "to school", "do you want to eat?"
+          + EAT -> "eat" (not "i am eating"). An activity said as "eating"
+          is left to TinyLlama: "are you eating?" + EAT -> "i am eating".
+        Returns the answer, or None when this turn is not one."""
+        said = PLACE_GOAL if "go" in self.last_heard else PLACE_ANSWER
+        if "where" in self.last_question_words and all(s in PLACES for s in signs):
+            return " and ".join(said[s] for s in signs)
+        if len(signs) == 1 and signs[0] in self.last_heard:
+            if signs[0] in PLACES:
+                return said[signs[0]]
+            if signs[0] in ACTIVITIES and signs[0] in self.last_said:
+                return signs[0]
+        return None
+
+    def asked_how(self):
+        """The hearing person's last turn asked how someone is: "how is your
+        mother?", "are you okay?"."""
+        return self.last_was_question and ("how" in self.last_question_words
+                                           or bool(self.last_heard & STATES))
+
+    def agreement(self, signs, negated=False):
+        """FINE or GOOD alone, replying to a hearing turn that did not ask how
+        anyone is, agrees with it: "mother is home." + FINE -> "okay", not
+        "mother is fine" or "i am fine". Returns the reply, or None."""
+        if (negated or not self.last_heard or len(signs) != 1
+                or signs[0] not in AGREEMENT or self.asked_how()):
+            return None
+        return AGREEMENT[signs[0]]
 
     def note_deaf(self, signs, sentence):
         """Remember what the Deaf person just signed."""
         words = [normalize_word(w) for w in list(signs) + sentence.split()]
         self.last_was_question = False
         self.last_question_words = set()
+        self.last_heard = set()
+        self.last_said = set()
         if any(w in PEOPLE for w in words):
             self.addressed_to_you = False
         self._remember_person(words)
@@ -296,11 +377,16 @@ class ActiveContext:
 
 def asked_question(text, words):
     """The hearing person asked something: typed with "?", or spoken (no
-    punctuation) starting with a question word after any greeting."""
+    punctuation) starting with a question word after any greeting ("do not
+    sleep" is a request), or with "can you", "are you" ... inside it
+    ("sorry can you say that again")."""
     if "?" in text:
         return True
     rest = [w for w in words if w not in ("hello", "hi", "hey")]
-    return bool(rest) and rest[0] in QUESTION_STARTERS
+    if rest and rest[0] in QUESTION_STARTERS and rest[1:2] != ["not"]:
+        return True
+    return any(a in HELPER_VERBS | {"could", "would"} and b in SUBJECTS
+               for a, b in zip(rest, rest[1:]))
 
 
 # Words a negation passes over to reach the word it negates ("do not BE sad").
@@ -329,15 +415,19 @@ def punctuate(sentence):
     words = sentence.split()
     if not words:
         return sentence
-    asked = (words[0] in QUESTION_STARTERS or any(w in QUESTIONS for w in words)
+    # "do not help me" is a request, not a question
+    asked = ((words[0] in QUESTION_STARTERS and words[1:2] != ["not"])
+             or any(w in QUESTIONS for w in words)
              or any(a in QUESTION_STARTERS and b in SUBJECTS for a, b in zip(words, words[1:])))
     return sentence + ("?" if asked else ".")
 
 
 def to_declarative(sentence):
     """Answer form: "is mother home" as a reply to a question is the
-    statement "mother is home"."""
+    statement "mother is home" ("yes is mother home" -> "yes mother is home")."""
     words = sentence.split()
+    if len(words) > 1 and words[0] == "yes":
+        return "yes " + to_declarative(" ".join(words[1:]))
     if len(words) > 2 and words[0] == "is":
         rest = words[1:]
         for i, w in enumerate(rest):
@@ -350,18 +440,26 @@ def to_declarative(sentence):
 def negate(sentence):
     """Put a signed NOT into the sentence, so a negation is never lost:
     "i am fine" -> "i am not fine", "is mother home" -> "mother is not home",
-    "i want water" -> "i do not want water", "help me" -> "do not help me"."""
+    "i want water" -> "i do not want water", "help me" -> "do not help me",
+    "i went to school yesterday" -> "i did not go to school yesterday",
+    "tomorrow" -> "not tomorrow"."""
     words = to_declarative(sentence).split()
     if not words:
         return "no"
+    if words[0] == "please" and len(words) > 1:       # "please do not help me"
+        return "please " + negate(" ".join(words[1:]))
     if words[0] in HELPER_VERBS:                      # a question: "are you studying"
         return " ".join(words[:2] + ["not"] + words[2:])
     for i, w in enumerate(words):
         if w in HELPER_VERBS:
             return " ".join(words[:i + 1] + ["not"] + words[i + 1:])
+        if w in PAST_FORMS:
+            return " ".join(words[:i] + ["did", "not", PAST_FORMS[w]] + words[i + 1:])
     if words[0] in ("i", "you", "we"):
         return " ".join(words[:1] + ["do", "not"] + words[1:])
-    return "do not " + " ".join(words)
+    if words[0] in ACTIVITIES | {"help", "say"}:      # a request: "say it again"
+        return "do not " + " ".join(words)
+    return "not " + " ".join(words)                   # no verb: "not that person"
 
 
 def covered(sign, out_words):
@@ -415,7 +513,7 @@ class SLMPipeline:
         Words the picker was trained on stay exactly as spoken ("okay",
         "driving"), because that is the form it learned them in.
         Returns (words, list of changes made)."""
-        text = normalize_input(text).lower().replace("’", "'")
+        text = normalize_input(text).lower().replace("â€™", "'")
         words, changes = [], []
         for m in GREETING_PHRASES.finditer(text):
             changes.append(f"{m.group(0)} -> dropped")
@@ -464,7 +562,7 @@ class SLMPipeline:
             return self.picker.contextualize(vectors, mask)
 
     def space_restriction(self, hidden, words):
-        """Space Restriction: narrow the sentence down to the 34-sign space.
+        """Space Restriction: narrow the sentence down to the 44-sign space.
         The picker scores each word (drop or keep) and whether a leading
         "how" is needed; then only signs can survive, every sign except
         "my"/"you" is kept, the signs keep their spoken order, and a spoken
@@ -474,10 +572,12 @@ class SLMPipeline:
             tag_logits, q_logits = self.picker.heads(hidden, mask)
         return restrict_to_signs(tag_logits, q_logits, words)
 
-    def transcribed_words(self, glosses):
+    def transcribed_words(self, glosses, asked=False):
         """Transcribed Words (hearing -> Deaf): the signs for the Deaf reader,
-        plain words without punctuation."""
-        return " ".join(glosses)
+        each sign by its name ("thank you"). The only punctuation is a "?"
+        when the hearing person asked a question ("you eat?")."""
+        out = " ".join(SIGN_NAMES.get(g, g) for g in glosses)
+        return out + "?" if asked and out else out
 
     # ================= DEAF -> HEARING boxes =================
 
@@ -489,8 +589,8 @@ class SLMPipeline:
         - A sign below SIGN_CONFIDENCE_THRESHOLD is dropped as unsure, so
           the SLM never guesses from gesture or home sign.
         - A negation (NOT) is kept as a flag and never thrown away.
-        - Labels become sign names ("mama" -> "mother"); anything that is
-          not one of the signs is set aside.
+        - Labels become sign names ("mama" -> "mother", "thank you" -> the
+          one sign "thank"); anything that is not one of the signs is set aside.
         Returns (signs, notes): notes holds negated, unsure, ignored and
         each sign's confidence."""
         items = []                                    # (word, confidence or None)
@@ -502,8 +602,10 @@ class SLMPipeline:
                     items.append((str(r[0]), r[1]))
                 else:
                     items += [(w, None) for w in str(r).split()]
+            # a label of two words ("thank you") is one sign
+            items = [(w, c) for label, c in items for w in THANK_YOU.sub("thank", label).split()]
         else:
-            for raw in normalize_input(recognized).split():
+            for raw in THANK_YOU.sub("thank", normalize_input(recognized)).split():
                 word, _, conf = raw.partition(":")
                 try:
                     c = float(conf) if conf else None
@@ -524,7 +626,7 @@ class SLMPipeline:
             elif w in NEGATIONS:
                 negated = True
             elif normalize_word(w) in SIGNS:
-                signs.append(normalize_word(w))
+                signs.append(CAMERA_SIGN.get(normalize_word(w), normalize_word(w)))
                 confidence[signs[-1]] = 1.0 if c is None else float(c)
             else:
                 ignored.append(w)
@@ -535,8 +637,9 @@ class SLMPipeline:
         """Sentence Completion: TinyLlama writes the English sentence one
         word at a time from the embedded signs. Three rules follow:
         - answer form: a reply to a question is written as a statement
-        - safety net: if the sentence left out a sign, show the signs
-          instead of a fluent sentence about something else
+        - safety net: if the sentence left out a sign, or names a sign
+          nobody signed, show the signs instead of a fluent sentence about
+          something else
         - negation: a signed NOT is put into the sentence, never dropped.
         Returns (sentence, notes)."""
         sentence = self.decoder.generate_from_memory(vectors, self.tokenizer)
@@ -547,9 +650,12 @@ class SLMPipeline:
                 notes.append(f"answer form: {sentence!r} -> {stated!r}")
                 sentence = stated
         missing = [s for s in signs if not covered(s, set(sentence.split()))]
-        if missing:
-            notes.append(f"safety net: {sentence!r} left out {missing}, showing the signs")
-            sentence = " ".join((["not"] if negated else []) + signs)
+        added = [w for w in sentence.split()
+                 if normalize_word(w) in SIGNS - set(signs) - ADDABLE_SIGNS]
+        if missing or added:
+            why = f"left out {missing}" if missing else f"added {added}, which nobody signed"
+            notes.append(f"safety net: {sentence!r} {why}, showing the signs")
+            sentence = " ".join((["not"] if negated else []) + [SIGN_NAMES.get(s, s) for s in signs])
         elif negated:
             negative = negate(sentence)
             notes.append(f"negation: {sentence!r} -> {negative!r}")
@@ -623,6 +729,11 @@ class SLMPipeline:
                                   "each word now reflects the whole sentence")
 
         glosses, labels, is_question = self.space_restriction(hidden, kept)
+        # THANK YOU is one sign, so the "you" of a spoken "thank you" is not
+        # shown again ("i am fine thank you" -> "fine thank you", not "... you you")
+        if "thank you" in " ".join(words):
+            glosses = [g for i, g in enumerate(glosses)
+                       if not (g == "you" and glosses[i - 1:i] == ["thank"])]
         verdicts = []
         for w, lab in zip(kept, labels):
             if w in NEGATIONS:
@@ -636,7 +747,8 @@ class SLMPipeline:
                  + f" -> {' '.join(glosses) or '(nothing)'}")
 
         glosses, resolved = self.context.resolve_pronoun(words, glosses)
-        self.context.note_hearing(words, glosses, asked_question(text, words))
+        asked = asked_question(text, words) or bool(is_question)
+        self.context.note_hearing(words, glosses, asked)
         heard = {normalize_word(w) for w in words}
         repair = any(w in NEGATIONS for w in words) and "understand" in heard
         topic_note = self.context.update_topic(heard | set(glosses), repair=repair)
@@ -645,7 +757,7 @@ class SLMPipeline:
             detail = f"he/she -> {resolved}; " + detail
         turn.add("Active Context", detail)
 
-        out = self.transcribed_words(glosses)
+        out = self.transcribed_words(glosses, asked)
         turn.add("Transcribed Words", out or "(nothing)")
         self.display(turn, out)
         turn.add("Display", "Deaf person's screen")
@@ -682,7 +794,9 @@ class SLMPipeline:
         # Active Context. Repair rule: NOT + UNDERSTAND asks the hearing
         # person to rephrase, whatever the active topic.
         repair = negated and "understand" in signs
-        topic_note = self.context.update_topic(signs + (["not"] if negated else []),
+        # an agreement ("okay") is not about feelings, so it leaves the topic alone
+        agreed = None if repair else self.context.agreement(signs, negated)
+        topic_note = self.context.update_topic([] if agreed else signs + (["not"] if negated else []),
                                                found["confidence"], repair)
         if repair:
             turn.add("Active Context", f"NOT + UNDERSTAND = repair; {topic_note}")
@@ -693,8 +807,15 @@ class SLMPipeline:
                 vectors = torch.cat([extra, vectors], dim=1)
             turn.add("Active Context", f"{reason}; {topic_note}")
 
+        answer = None if repair else self.context.short_answer(signs)
         if repair:
             sentence, notes = REPAIR_SENTENCE, ["repair rule"]
+        elif agreed:
+            sentence, notes = agreed, ["agreement: the hearing person did not ask how anyone is"]
+        elif answer:
+            # a short answer keeps NOT in front: "not at school", "not eat"
+            sentence = "not " + answer if negated else answer
+            notes = ["short answer: the hearing person's last turn says the rest"]
         else:
             sentence, notes = self.sentence_completion(vectors, signs, negated)
         turn.add("Sentence Completion", sentence

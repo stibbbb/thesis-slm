@@ -1,6 +1,6 @@
 # SLM Vocabulary Pool
 # CONFIRMED_GESTURES: the words the recognition module is actually
-#   trained to recognize -- the 34 signs confirmed by the recognition team.
+#   trained to recognize -- the 44 signs confirmed by the recognition team.
 # HELPER_WORDS: words NOT signed by the user. Two roles:
 #   (a) grammatical connectors the SLM adds during sentence completion
 #   (b) words that appear in a HEARING person's natural speech, which
@@ -15,54 +15,66 @@
 #   2. Reduce   (NonDeaf-to-Deaf): English in, signs out
 
 CONFIRMED_GESTURES = [
-    # The 34 signs confirmed by the recognition team. These are the
+    # The 44 signs confirmed by the recognition team. These are the
     # ONLY words the camera can produce. Everything else in this file
     # is speech- or grammar-only.
 
     # Responses
-    "yes", "good", "fine", "understand",
-    # Greetings & politeness
-    "hello", "please", "sorry", "nice", "again",
+    "yes", "good", "fine", "understand", "not",
+    # Greetings & politeness ("thank" is the sign THANK YOU)
+    "hello", "please", "sorry", "nice", "again", "thank",
     # Question words
     "what", "where", "why", "how",
     # Pronouns
     "you", "my",
     # Everyday needs
-    "help", "eat", "water",
+    "help", "eat", "water", "phone", "sleep", "go", "want",
     # People & identity
-    "mother", "father", "family", "friend", "deaf", "teacher",
+    "mother", "father", "family", "friend", "deaf", "teacher", "person",
+    # The camera cannot tell MOTHER from FATHER, so the Deaf person's signs
+    # report both as PARENT; "mother" and "father" stay for the hearing
+    # person's words on the Deaf screen.
+    "parent",
     # Places
     "home", "school", "class", "here",
     # School & learning
-    "learn", "study",
+    "learn", "study", "sign",
     # Time
-    "time", "now", "today", "tomorrow",
+    "time", "now", "today", "tomorrow", "yesterday",
 ]
 
 HELPER_WORDS = [
     # --- grammatical connectors
     "i", "your", "am", "is", "are", "going", "doing", "and", "at", "in",
-    "he", "she", "it", "the", "to", "will", "can", "do", "does", "go",
+    "he", "she", "it", "the", "to", "will", "can", "do", "does",
     "have", "for", "we",
 
-    # --- words a hearing person says that have NO sign in the 34.
+    # --- past tense, for YESTERDAY ("i went to school yesterday")
+    "was", "were", "did", "went", "ate", "studied", "learned", "slept", "signed",
+    # --- for WANT with a person ("i want father to be here now",
+    #     "teacher wants to learn")
+    "be", "wants",
+    # --- SIGN as a subject studied ("i am studying sign language")
+    "language",
+
+    # --- words a hearing person says that have NO sign in the 44.
     # Present so the model can learn to DROP them (see header note).
-    "his", "her", "me", "who", "when", "want", "need", "needs", "some",
+    "his", "her", "me", "who", "when", "need", "needs", "some",
     "tell", "know", "this", "that", "say", "come", "right", "meet",
     "there", "look",
 
-    # --- negation. There is no sign for it, but it must be SEEN so the
-    # meaning is not inverted ("i do not understand"); see word_picker.py.
-    "not", "no",
+    # --- "no" has no sign, but it must be SEEN so the meaning is not
+    # inverted; it is shown as NOT (see word_picker.py).
+    "no",
 
     # --- verb forms appearing in natural speech
-    "studying", "learning", "eating",
+    "studying", "learning", "eating", "sleeping", "signing",
 
     # --- informal equivalents (also in onnx_config.GLOSS_MAP)
     "mom", "dad", "house", "okay", "alright", "hi",
 
     # --- everyday filler the hearing person says
-    "very", "really", "so", "still",
+    "very", "really", "so", "still", "much",
 ]
 
 # Combined master list (deduplicated, sorted)
@@ -78,6 +90,8 @@ CATEGORIES = {
     "teacher": "Person / Family",
     "family": "Person / Family",
     "friend": "Person / Family",
+    "person": "Person / Family",
+    "parent": "Person / Family",
 
     # --- Pronoun / Reference: deliberately NOT Person/Family. "you" is
     # the person being spoken to, who is always present.
@@ -99,6 +113,9 @@ CATEGORIES = {
     "study": "Daily Activity",
     "learn": "Daily Activity",
     "eat": "Daily Activity",
+    "sleep": "Daily Activity",
+    "go": "Daily Activity",
+    "sign": "Daily Activity",
 
     # --- Places and things
     "home": "Location / Place",
@@ -106,15 +123,18 @@ CATEGORIES = {
     "class": "Location / Place",
     "here": "Location / Place",
     "water": "Object",
+    "phone": "Object",
 
     # --- Time
     "time": "Time",
     "now": "Time",
     "today": "Time",
     "tomorrow": "Time",
+    "yesterday": "Time",
 
     # --- Needs
     "help": "Need",
+    "want": "Need",
 
     # --- Social
     "hello": "Social",
@@ -124,9 +144,14 @@ CATEGORIES = {
     "yes": "Social",
     "understand": "Social",
     "again": "Social",
+    "thank": "Social",
+
+    # --- Negation: shown and written by a rule, never learned (word_picker.py,
+    # slm_pipeline.negate), so the meaning can never invert
+    "not": "Negation",
 }
 
-assert len(CONFIRMED_GESTURES) == 34, len(CONFIRMED_GESTURES)
+assert len(CONFIRMED_GESTURES) == 44, len(CONFIRMED_GESTURES)
 assert set(CATEGORIES) == set(CONFIRMED_GESTURES)
 
 if __name__ == "__main__":

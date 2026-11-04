@@ -1,5 +1,5 @@
 """
-generate_dataset_v4.py -- builds the training data for the 34 signs
+generate_dataset_v4.py -- builds the training data for the 44 signs
 confirmed by the recognition team.
 
 WHY THIS IS A GENERATOR AND NOT A LIST
@@ -15,7 +15,7 @@ every rule then covers it automatically. That is the difference
 between a rule-driven dataset and a hand-written one.
 
 IMPORTANT ASYMMETRY BETWEEN THE TWO DIRECTIONS
-  COMPLETE (Deaf -> hearing): the INPUT is constrained to the 34 signs,
+  COMPLETE (Deaf -> hearing): the INPUT is constrained to the 44 signs,
       because that is all the camera can recognize.
   REDUCE (hearing -> Deaf): the INPUT is ordinary spoken English and is
       NOT constrained -- the hearing person talks into a microphone.
@@ -37,33 +37,53 @@ SEED = 42
 QUESTION_MARKER_WORD = "how"
 
 # ---------------------------------------------------------------- #
-# THE 34 CONFIRMED SIGNS, grouped by how they behave grammatically.
+# THE 44 CONFIRMED SIGNS, grouped by how they behave grammatically.
 # ---------------------------------------------------------------- #
 
 PERSON   = ["mother", "father", "teacher", "family", "friend"]
+SOMEONE  = ["person"]       # any person: not greeted by name, never "my person"
+# The camera cannot tell MOTHER from FATHER: the Deaf person's signs say
+# PARENT (Complete inputs), while the hearing person still says mother,
+# father or parent (Reduce inputs).
+SIGNED_PERSON = ["parent", "teacher", "family", "friend"]
+HEARD_PERSON = PERSON + ["parent"]
 STATE    = ["fine", "good", "deaf"]
-ACTIVITY = ["study", "learn", "eat"]
+ACTIVITY = ["study", "learn", "eat", "sleep", "sign"]
+MOTION   = ["go"]           # needs a place: "go school" = "i am going to school"
 PLACE    = ["home", "school", "class", "here"]
-THING    = ["water"]
+THING    = ["water", "phone"]
 QUESTION = ["what", "where", "why", "how"]
-SOCIAL   = ["hello", "sorry", "please", "nice", "yes", "understand", "again"]
-NEED     = ["help"]
+SOCIAL   = ["hello", "sorry", "please", "nice", "yes", "understand", "again", "thank"]
+NEED     = ["help", "want"]
 PRONOUN  = ["you", "my"]
-TIME     = ["time", "now", "today", "tomorrow"]
-WHEN     = ["now", "today", "tomorrow"]     # the time words that say WHEN
+TIME     = ["time", "now", "today", "tomorrow", "yesterday"]
+WHEN     = ["now", "today", "tomorrow"]     # the time words that say WHEN (not past)
+NEGATION = ["not"]          # put in by a rule (slm_pipeline.negate), never learned
 
-ALL_SIGNS = (PERSON + STATE + ACTIVITY + PLACE + THING + QUESTION
-             + SOCIAL + NEED + PRONOUN + TIME)
+ALL_SIGNS = (PERSON + ["parent"] + SOMEONE + STATE + ACTIVITY + MOTION + PLACE + THING
+             + QUESTION + SOCIAL + NEED + PRONOUN + TIME + NEGATION)
 assert sorted(ALL_SIGNS) == sorted(CONFIRMED_GESTURES), "sign lists out of sync"
 
+PEOPLE = PERSON + SOMEONE   # everyone a sentence can be about
+
 # How each sign reads inside a natural sentence.
-VERB = {"study": "studying", "learn": "learning", "eat": "eating"}
+VERB = {"study": "studying", "learn": "learning", "eat": "eating", "sleep": "sleeping",
+        "sign": "signing"}
+PAST = {"study": "studied", "learn": "learned", "eat": "ate", "sleep": "slept", "sign": "signed"}
 # being AT a place, and going TO it
 AT = {"home": "home", "school": "at school", "class": "in class", "here": "here"}
 TO = {"home": "home", "school": "to school", "class": "to class"}
+# Going somewhere TO DO something: only the activities that make sense at
+# each place ("go school study", not "go class sleep").
+PURPOSE = {"school": ["study", "learn", "sign", "eat"],
+           "class": ["study", "learn", "sign"],
+           "home": ["eat", "sleep", "study"]}
 PERSON_ARTICLE = {"mother": "mother", "father": "father",
                   "teacher": "teacher", "family": "my family",
-                  "friend": "my friend"}
+                  "friend": "my friend", "person": "the person",
+                  "parent": "my parent"}
+# "what are you sleeping" means nothing: SLEEP is not asked with WHAT
+WHAT_ACTIVITY = [a for a in ACTIVITY if a != "sleep"]
 
 # ---------------------------------------------------------------- #
 # SINGLE SIGNS -- what one sign alone means.
@@ -78,6 +98,7 @@ SINGLE = {
     "nice": "nice to meet you",
     "understand": "i understand",
     "again": "say it again",
+    "thank": "thank you",
     # states -- subject is the signer
     "fine": "i am fine",
     "good": "i am good",
@@ -86,20 +107,26 @@ SINGLE = {
     "study": "i am studying",
     "learn": "i am learning",
     "eat": "i am eating",
+    "sleep": "i am going to sleep",
+    "sign": "i am signing",
+    "go": "i am going",
     # places
     "home": "i am home",
     "school": "i am at school",
     "class": "i am in class",
     "here": "i am here",
     # things and needs
-    "water": "i want water",
+    # WATER alone is not "i want water": WANT is a sign of its own now
+    "water": "water",
+    "phone": "phone",
     "help": "help me",
+    "want": "i want that",
     # people -- introducing someone
-    "mother": "this is mother",
-    "father": "this is father",
+    "parent": "this is my parent",
     "teacher": "this is teacher",
     "family": "this is my family",
     "friend": "this is my friend",
+    "person": "that person",
     # pronouns
     "you": "you",
     "my": "my",
@@ -113,6 +140,7 @@ SINGLE = {
     "now": "now",
     "today": "today",
     "tomorrow": "tomorrow",
+    "yesterday": "yesterday",
 }
 
 
@@ -142,6 +170,8 @@ def build_complete():
     thing being sad, a greeting aimed at water -- are deliberately not
     generated, because teaching nonsense is worse than leaving a gap.
     """
+    PERSON = SIGNED_PERSON              # the camera signs PARENT, not mother/father
+    PEOPLE = PERSON + SOMEONE
     pats = []
 
     def add(words, sentence):
@@ -152,7 +182,7 @@ def build_complete():
         pats.append(([sign], sentence))
 
     # ---------- PERSON + something ----------
-    for pr in PERSON:
+    for pr in PEOPLE:
         who = PERSON_ARTICLE[pr]
         for st in STATE:
             add([pr, st], f"{who} is {st}")
@@ -162,10 +192,15 @@ def build_complete():
             add([pr, pl], f"is {who} {AT[pl]}")
         add(["where", pr], f"where is {who}")
         add(["how", pr], f"how is {who}")
+        if pr in SOMEONE:
+            continue
         add(["hello", pr], f"hello {pr}")
         add(["sorry", pr], f"i am sorry {pr}")
         add(["nice", pr], f"nice to meet you {pr}")
         add(["please", pr], f"please {pr}")
+        add(["thank", pr], f"thank you {pr}")
+    add(["nice", "person"], "the person is nice")
+    add(["help", "person"], "help the person")
 
     # ---------- my + PERSON, and what can be said about them ----------
     for pr in PERSON:
@@ -185,6 +220,7 @@ def build_complete():
     for a in ACTIVITY:
         add(["where", a], f"where are you {VERB[a]}")
         add(["why", a], f"why are you {VERB[a]}")
+    for a in WHAT_ACTIVITY:
         add(["what", a], f"what are you {VERB[a]}")
     for st in STATE:
         add(["why", st], f"why are you {st}")
@@ -194,13 +230,14 @@ def build_complete():
     add(["how", "you"], "how are you")
 
     # ---------- QUESTION + PERSON + STATE / ACTIVITY ----------
-    for pr in PERSON:
+    for pr in PEOPLE:
         who = PERSON_ARTICLE[pr]
         for st in STATE:
             add(["why", pr, st], f"why is {who} {st}")
         for a in ACTIVITY:
             add(["where", pr, a], f"where is {who} {VERB[a]}")
             add(["why", pr, a], f"why is {who} {VERB[a]}")
+        for a in WHAT_ACTIVITY:
             add(["what", pr, a], f"what is {who} {VERB[a]}")
 
     # ---------- PRONOUN + something ----------
@@ -216,7 +253,7 @@ def build_complete():
         add(["my", pl], f"i am {AT[pl]}")
 
     # ---------- water and help ----------
-    add(["you", "water"], "do you want water")
+    add(["you", "water"], "do you have water")
     add(["please", "water"], "water please")
     add(["you", "help"], "can i help you")
     add(["my", "help"], "i need help")
@@ -226,31 +263,188 @@ def build_complete():
     for pl in TO:
         add(["help", pl], f"help me go {TO[pl]}")
 
+    # ---------- phone ----------
+    add(["my", "phone"], "this is my phone")
+    add(["where", "my", "phone"], "where is my phone")
+    add(["you", "phone"], "do you have your phone")
+    add(["please", "phone"], "phone please")
+
+    # ---------- want ----------
+    for t in THING:
+        mine, yours = ("my ", "your ") if t == "phone" else ("", "")
+        add(["want", t], f"i want {mine}{t}")
+        add(["you", "want", t], f"do you want {yours}{t}")
+    for a in ACTIVITY:
+        add(["want", a], f"i want to {a}")
+        add(["you", "want", a], f"do you want to {a}")
+    for pl in TO:
+        add(["want", pl], f"i want to go {TO[pl]}")
+        add(["want", "go", pl], f"i want to go {TO[pl]}")
+        add(["you", "want", "go", pl], f"do you want to go {TO[pl]}")
+    add(["want", "help"], "i want help")
+    add(["what", "want"], "what do you want")
+    add(["what", "you", "want"], "what do you want")
+    for pr in PERSON:
+        who = PERSON_ARTICLE[pr]
+        add(["want", pr], f"i want {who}")
+        for pl in PLACE:
+            add(["want", pr, pl], f"i want {who} to be {AT[pl]}")
+            for t in WHEN:
+                add(["want", pr, pl, t], f"i want {who} to be {AT[pl]} {t}")
+
+    # ---------- want + activity + place / time ----------
+    for a in ACTIVITY:
+        for pl in PLACE:
+            loc = "at home" if pl == "home" else AT[pl]
+            add(["want", a, pl], f"i want to {a} {loc}")
+            add(["you", "want", a, pl], f"do you want to {a} {loc}")
+        for t in WHEN:
+            add(["want", a, t], f"i want to {a} {t}")
+            add(["you", "want", a, t], f"do you want to {a} {t}")
+
+    # ---------- a person who WANTS something: "teacher wants to learn" ----------
+    for pr in PEOPLE:
+        who = PERSON_ARTICLE[pr]
+        for a in ACTIVITY:
+            add([pr, "want", a], f"{who} wants to {a}")
+            for pl in PLACE:
+                loc = "at home" if pl == "home" else AT[pl]
+                add([pr, "want", a, pl], f"{who} wants to {a} {loc}")
+        for pl in TO:
+            add([pr, "want", "go", pl], f"{who} wants to go {TO[pl]}")
+        add([pr, "want", "water"], f"{who} wants water")
+        add([pr, "want", "phone"], f"{who} wants the phone")
+
+    # ---------- going somewhere TO DO something ----------
+    # "want go school study" -> "i want to go to school to study"
+    # "go school study tomorrow" -> "i will go to school to study tomorrow"
+    def going(subject, t):
+        """The 'go' verb for a subject at a time (None = right now)."""
+        if subject == "i":
+            return {"tomorrow": "i will go", "yesterday": "i went"}.get(t, "i am going")
+        if subject == "you":
+            return {"tomorrow": "will you go", "yesterday": "did you go"}.get(t, "are you going")
+        return {"tomorrow": f"{subject} will go", "yesterday": f"{subject} went"}.get(
+            t, f"{subject} is going")
+
+    subjects = [([], "i"), (["you"], "you")] + [([pr], PERSON_ARTICLE[pr]) for pr in PEOPLE]
+    for pl, acts in PURPOSE.items():
+        for a in acts:
+            goal = f"{TO[pl]} to {a}"
+            for signed, subject in subjects:
+                wants = {"i": "i want", "you": "do you want"}.get(subject, f"{subject} wants")
+                add(signed + ["go", pl, a], f"{going(subject, None)} {goal}")
+                add(signed + ["want", "go", pl, a], f"{wants} to go {goal}")
+                for t in WHEN + ["yesterday"]:
+                    add(signed + ["go", pl, a, t], f"{going(subject, t)} {goal} {t}")
+                for t in WHEN:
+                    add(signed + ["want", "go", pl, a, t], f"{wants} to go {goal} {t}")
+
+    # ---------- thank you ----------
+    add(["thank", "you"], "thank you")
+    add(["thank", "help"], "thank you for your help")
+    add(["thank", "water"], "thank you for the water")
+    add(["thank", "again"], "thank you again")
+    add(["yes", "thank"], "yes thank you")
+
     # ---------- ACTIVITY + PLACE, and with a person ----------
     for a in ACTIVITY:
         for pl in PLACE:
             loc = "at home" if pl == "home" else AT[pl]
             add([a, pl], f"i am {VERB[a]} {loc}")
-            for pr in PERSON:
+            for pr in PEOPLE:
                 add([pr, a, pl], f"{PERSON_ARTICLE[pr]} is {VERB[a]} {loc}")
+
+    # ---------- go: always to a place, or to do something ----------
+    for pl in TO:
+        add(["go", pl], f"i am going {TO[pl]}")
+        add(["you", "go", pl], f"are you going {TO[pl]}")
+        for pr in PEOPLE:
+            add([pr, "go", pl], f"{PERSON_ARTICLE[pr]} is going {TO[pl]}")
+    for a in ACTIVITY:
+        add(["go", a], f"i am going to {a}")
+    add(["where", "go"], "where are you going")
+    add(["where", "you", "go"], "where are you going")
+    for pr in PEOPLE:
+        add(["where", pr, "go"], f"where is {PERSON_ARTICLE[pr]} going")
+    # where + go + a time: "where will you go tomorrow"
+    for t in WHEN:
+        you_go = "where will you go" if t == "tomorrow" else "where are you going"
+        add(["where", "go", t], f"{you_go} {t}")
+        add(["where", "you", "go", t], f"{you_go} {t}")
+        for pr in PEOPLE:
+            who = PERSON_ARTICLE[pr]
+            they_go = f"where will {who} go" if t == "tomorrow" else f"where is {who} going"
+            add(["where", pr, "go", t], f"{they_go} {t}")
+    add(["where", "go", "yesterday"], "where did you go yesterday")
+    add(["where", "you", "go", "yesterday"], "where did you go yesterday")
+    for pr in PEOPLE:
+        add(["where", pr, "go", "yesterday"], f"where did {PERSON_ARTICLE[pr]} go yesterday")
+
+    # ---------- where + an activity, and when: "where did you study yesterday" ----------
+    for a in ACTIVITY:
+        add(["where", "you", a], f"where are you {VERB[a]}")
+        for t in WHEN:
+            you_do = f"where will you {a}" if t == "tomorrow" else f"where are you {VERB[a]}"
+            add(["where", a, t], f"{you_do} {t}")
+            add(["where", "you", a, t], f"{you_do} {t}")
+            for pr in PEOPLE:
+                who = PERSON_ARTICLE[pr]
+                they_do = f"where will {who} {a}" if t == "tomorrow" else f"where is {who} {VERB[a]}"
+                add(["where", pr, a, t], f"{they_do} {t}")
+        add(["where", a, "yesterday"], f"where did you {a} yesterday")
+        add(["where", "you", a, "yesterday"], f"where did you {a} yesterday")
+        for pr in PEOPLE:
+            add(["where", pr, a, "yesterday"], f"where did {PERSON_ARTICLE[pr]} {a} yesterday")
+    add(["why", "go"], "why are you going")
+    add(["time", "go"], "it is time to go")
+    add(["what", "time", "go"], "what time do we go")
+    add(["please", "go"], "please go")
 
     # ---------- TIME: now / today / tomorrow ----------
     for t in WHEN:
         for a in ACTIVITY:
             add([a, t], when_phrase("i", a, t))
             add(["you", a, t], when_phrase("you", a, t))
-            for pr in PERSON:
+            for pr in PEOPLE:
                 add([pr, a, t], when_phrase(PERSON_ARTICLE[pr], a, t))
         for pl in TO:
             go = "i will go" if t == "tomorrow" else "i am going"
             add([pl, t], f"{go} {TO[pl]} {t}")
+            add(["go", pl, t], f"{go} {TO[pl]} {t}")
             you_go = "will you go" if t == "tomorrow" else "are you going"
             add(["you", pl, t], f"{you_go} {TO[pl]} {t}")
+            add(["you", "go", pl, t], f"{you_go} {TO[pl]} {t}")
         for st in STATE:
             add([st, t], f"i am {st} {t}")
         add(["how", "you", t], f"how are you {t}")
     add(["where", "you", "now"], "where are you now")
     add(["understand", "now"], "i understand now")
+
+    # ---------- TIME: yesterday, in the past tense ----------
+    for a in ACTIVITY:
+        add([a, "yesterday"], f"i {PAST[a]} yesterday")
+        add(["you", a, "yesterday"], f"did you {a} yesterday")
+        for pr in PEOPLE:
+            add([pr, a, "yesterday"], f"{PERSON_ARTICLE[pr]} {PAST[a]} yesterday")
+    for pl in TO:
+        add([pl, "yesterday"], f"i went {TO[pl]} yesterday")
+        add(["go", pl, "yesterday"], f"i went {TO[pl]} yesterday")
+        add(["you", pl, "yesterday"], f"did you go {TO[pl]} yesterday")
+        add(["you", "go", pl, "yesterday"], f"did you go {TO[pl]} yesterday")
+    for st in ["fine", "good"]:
+        add([st, "yesterday"], f"i was {st} yesterday")
+    add(["how", "you", "yesterday"], "how were you yesterday")
+    add(["where", "you", "yesterday"], "where were you yesterday")
+
+    # ---------- PERSON + PLACE + TIME: where someone is, and when ----------
+    for pr in PEOPLE:
+        who = PERSON_ARTICLE[pr]
+        for pl in PLACE:
+            add([pr, pl, "now"], f"{who} is {AT[pl]} now")
+            add([pr, pl, "today"], f"{who} is {AT[pl]} today")
+            add([pr, pl, "tomorrow"], f"{who} will be {AT[pl]} tomorrow")
+            add([pr, pl, "yesterday"], f"{who} was {AT[pl]} yesterday")
 
     # ---------- TIME: the sign "time" ----------
     add(["what", "time"], "what time is it")
@@ -260,7 +454,11 @@ def build_complete():
         add(["time", pl], f"it is time for {pl}")
     for a in ACTIVITY:
         add(["what", "time", a], f"what time do we {a}")
+        add(["what", "time", "you", a], f"what time do you {a}")
+        for pr in PEOPLE:
+            add(["what", "time", pr, a], f"what time does {PERSON_ARTICLE[pr]} {a}")
         add(["time", a], f"it is time to {a}")
+    add(["what", "time", "you", "go"], "what time do you go")
     add(["time", "home"], "it is time to go home")
 
     # ---------- again ----------
@@ -273,6 +471,59 @@ def build_complete():
     add(["yes", "please"], "yes please")
     add(["yes", "understand"], "yes i understand")
 
+    # ---------- learning sign language: LEARN / STUDY + SIGN ----------
+    for a in ["learn", "study"]:
+        add([a, "sign"], f"i am {VERB[a]} sign language")
+        add(["you", a, "sign"], f"are you {VERB[a]} sign language")
+        add(["want", a, "sign"], f"i want to {a} sign language")
+        add(["you", "want", a, "sign"], f"do you want to {a} sign language")
+        for t in WHEN:
+            doing = f"i will {a}" if t == "tomorrow" else f"i am {VERB[a]}"
+            add([a, "sign", t], f"{doing} sign language {t}")
+        add([a, "sign", "yesterday"], f"i {PAST[a]} sign language yesterday")
+        for pl in ["school", "class"]:
+            add([a, "sign", pl], f"i am {VERB[a]} sign language {AT[pl]}")
+        for pr in PEOPLE:
+            who = PERSON_ARTICLE[pr]
+            add([pr, a, "sign"], f"{who} is {VERB[a]} sign language")
+            add([pr, "want", a, "sign"], f"{who} wants to {a} sign language")
+
+    # ---------- YES + the answer: "yes study tomorrow" -> "yes i will study tomorrow" ----------
+    for st in STATE:
+        add(["yes", st], f"yes i am {st}")
+    for a in ACTIVITY:
+        add(["yes", a], f"yes i am {VERB[a]}")
+        add(["yes", "want", a], f"yes i want to {a}")
+        for t in WHEN:
+            add(["yes", a, t], f"yes {when_phrase('i', a, t)}")
+        add(["yes", a, "yesterday"], f"yes i {PAST[a]} yesterday")
+    for t in THING:
+        add(["yes", "want", t], f"yes i want {'my ' if t == 'phone' else ''}{t}")
+    add(["yes", "my", "phone"], "yes this is my phone")
+    for pl in PLACE:
+        add(["yes", pl], f"yes i am {AT[pl]}")
+    for pl in TO:
+        add(["yes", "go", pl], f"yes i am going {TO[pl]}")
+        for t in WHEN:
+            go = "i will go" if t == "tomorrow" else "i am going"
+            add(["yes", "go", pl, t], f"yes {go} {TO[pl]} {t}")
+        add(["yes", "go", pl, "yesterday"], f"yes i went {TO[pl]} yesterday")
+    for pr in PEOPLE:
+        who = PERSON_ARTICLE[pr]
+        for pl in PLACE:
+            add(["yes", pr, pl], f"yes {who} is {AT[pl]}")
+        for st in STATE:
+            add(["yes", pr, st], f"yes {who} is {st}")
+
+    # ---------- offering help: "my help you learn sign" ----------
+    add(["my", "help", "you"], "i will help you")
+    for a in ACTIVITY:
+        add(["help", "you", a], f"i will help you {a}")
+        add(["my", "help", "you", a], f"i will help you {a}")
+    for a in ["learn", "study"]:
+        add(["help", "you", a, "sign"], f"i will help you {a} sign language")
+        add(["my", "help", "you", a, "sign"], f"i will help you {a} sign language")
+
     return pats
 
 
@@ -282,9 +533,10 @@ def build_reduce():
     The hearing person speaks freely, so several phrasings are given
     for each meaning -- that variety is what forces the model to learn
     the underlying keep/drop rule instead of memorizing sentences.
-    Words with no sign ("his", "who", "when", "want") appear in the
+    Words with no sign ("his", "who", "when", "need") appear in the
     phrasings so the model learns to DROP them.
     """
+    PERSON = HEARD_PERSON               # the hearing person says mother, father, parent
     pats = []
 
     # PERSON + STATE
@@ -309,8 +561,7 @@ def build_reduce():
     for pl in ["home", "school", "class"]:
         pats.append(([f"where is {pl}", f"where is the {pl}",
                       f"where is my {pl}", f"where is your {pl}"], f"where {pl}"))
-    pats.append((["where are you", "tell me where you are",
-                  "where are you going"], "where you"))
+    pats.append((["where are you", "tell me where you are"], "where you"))
     pats.append((["where are you now", "where are you right now"],
                  "where you now"))
 
@@ -355,14 +606,17 @@ def build_reduce():
         pats.append(([f"what time do you {a}", f"what time will you {a}",
                       f"what time are you {VERB[a]}"], f"what time you {a}"))
 
-    # water / help  ("want" and "need" have no sign, so they are dropped)
-    pats.append((["do you want water", "do you need water",
-                  "do you want some water"], "you water"))
-    pats.append((["i want water", "i need water", "i want some water"], "water"))
+    # water / help  ("need" has no sign, so it is dropped; WANT is a sign)
+    pats.append((["do you need water", "do you need some water"], "you water"))
+    pats.append((["do you want water", "do you want some water"], "you want water"))
+    pats.append((["i need water", "i need some water"], "water"))
+    pats.append((["i want water", "i want some water"], "want water"))
     # "you" is kept when the help is for the listener, as in "you water"
-    pats.append((["i need help", "i want help", "i need some help"], "help"))
-    pats.append((["do you need help", "do you want help", "can i help you",
+    pats.append((["i need help", "i need some help"], "help"))
+    pats.append((["i want help", "i want some help"], "want help"))
+    pats.append((["do you need help", "can i help you",
                   "i can help you", "i will help you"], "help you"))
+    pats.append((["do you want help", "do you want some help"], "you want help"))
     pats.append((["please help me", "please help", "help me please"],
                  "please help"))
 
@@ -389,8 +643,9 @@ def build_reduce():
     pats.append((["please say it again", "please say that again",
                   "can you say that again please"], "please again"))
     for a in ACTIVITY:
-        pats.append(([f"i will {a} again", f"i want to {a} again"],
-                     f"{a} again"))
+        pats.append(([f"i will {a} again"], f"{a} again"))
+        pats.append(([f"i want to {a} again", f"i really want to {a} again"],
+                     f"want {a} again"))
 
     # PERSON + PLACE  (here: "mother is here")
     for p in PERSON:
@@ -431,7 +686,7 @@ def build_reduce():
     for pl in TO:
         for t in WHEN:
             pats.append(([f"i am going {TO[pl]} {t}", f"i will go {TO[pl]} {t}"],
-                         f"{pl} {t}"))
+                         f"go {pl} {t}"))
     pats.append((["i have class today", "we have class today"], "class today"))
     pats.append((["do you have class today", "will you have class today"],
                  "you class today"))
@@ -449,6 +704,156 @@ def build_reduce():
         pats.append(([f"it is time for {pl}", f"time for {pl}"], f"time {pl}"))
     for a in ACTIVITY:
         pats.append(([f"it is time to {a}", f"time to {a}"], f"time {a}"))
+
+    # GO is a sign when it moves someone to a place. "going to" + an
+    # activity is only the future ("i am going to study tomorrow" ->
+    # "study tomorrow" above), so the picker learns to drop it there.
+    for pl in TO:
+        pats.append(([f"i am going {TO[pl]}", f"i will go {TO[pl]}", f"i go {TO[pl]}"],
+                     f"go {pl}"))
+        pats.append(([f"are you going {TO[pl]}", f"will you go {TO[pl]}"], f"you go {pl}"))
+        pats.append(([f"do you want to go {TO[pl]}", f"you want to go {TO[pl]}"],
+                     f"you want go {pl}"))
+        for p in PERSON:
+            pats.append(([f"{p} is going {TO[pl]}", f"my {p} is going {TO[pl]}",
+                          f"{p} will go {TO[pl]}"], f"{p} go {pl}"))
+    pats.append((["where are you going", "where will you go", "where do you go"],
+                 "where you go"))
+    for t in WHEN:
+        pats.append(([f"where are you going {t}", f"where will you go {t}"],
+                     f"where you go {t}"))
+    pats.append((["it is time to go", "time to go"], "time go"))
+    pats.append((["you can go"], "go"))
+    pats.append((["please go", "go please"], "please go"))
+
+    # WANT is a sign: it is kept wherever it is said
+    for a in ACTIVITY:
+        pats.append(([f"i want to {a}", f"i really want to {a}"], f"want {a}"))
+        pats.append(([f"do you want to {a}", f"you want to {a}"], f"you want {a}"))
+    pats.append((["what do you want", "tell me what you want"], "what you want"))
+    pats.append((["i want my phone", "i want the phone"], "want phone"))
+    for p in PERSON:
+        pats.append(([f"i want {p}", f"i want my {p}"], f"want {p}"))
+        pats.append(([f"i want {p} to be here", f"i want my {p} to be here"],
+                     f"want {p} here"))
+        pats.append(([f"i want {p} to be here now", f"i want my {p} to be here now"],
+                     f"want {p} here now"))
+
+    # YESTERDAY: past-tense speech keeps its signs
+    for a in ACTIVITY:
+        pats.append(([f"i {PAST[a]} yesterday", f"i was {VERB[a]} yesterday"],
+                     f"{a} yesterday"))
+        pats.append(([f"did you {a} yesterday", f"were you {VERB[a]} yesterday"],
+                     f"you {a} yesterday"))
+        for p in PERSON:
+            pats.append(([f"{p} {PAST[a]} yesterday", f"my {p} {PAST[a]} yesterday"],
+                         f"{p} {a} yesterday"))
+    for pl in TO:
+        pats.append(([f"i went {TO[pl]} yesterday", f"we went {TO[pl]} yesterday"],
+                     f"go {pl} yesterday"))
+        pats.append(([f"did you go {TO[pl]} yesterday", f"you went {TO[pl]} yesterday"],
+                     f"you go {pl} yesterday"))
+    for pl in PLACE:
+        at = AT[pl] if pl != "home" else "at home"
+        pats.append(([f"i was {at} yesterday", f"we were {at} yesterday"],
+                     f"{pl} yesterday"))
+    for st in ["fine", "good"]:
+        pats.append(([f"i was {st} yesterday", f"i was very {st} yesterday"],
+                     f"{st} yesterday"))
+    pats.append((["where were you yesterday"], "where you yesterday"))
+    pats.append((["where did you go yesterday"], "where you go yesterday"))
+    # where + an activity, and when
+    for a in ACTIVITY:
+        v = VERB[a]
+        pats.append(([f"where did you {a} yesterday", f"where were you {v} yesterday"],
+                     f"where you {a} yesterday"))
+        pats.append(([f"where will you {a} tomorrow", f"where are you {v} tomorrow"],
+                     f"where you {a} tomorrow"))
+        pats.append(([f"where are you {v} today", f"where will you {a} today"],
+                     f"where you {a} today"))
+    pats.append((["how were you yesterday", "how were you doing yesterday"],
+                 "how you yesterday"))
+
+    # PERSON: someone not named ("people" becomes "person" in normalization)
+    for s in STATE:
+        pats.append(([f"the person is {s}", f"that person is {s}",
+                      f"this person is {s}"], f"person {s}"))
+    for a in ACTIVITY:
+        pats.append(([f"the person is {VERB[a]}", f"that person is {VERB[a]}"],
+                     f"person {a}"))
+    for pl in PLACE:
+        at = AT[pl] if pl != "home" else "at home"
+        pats.append(([f"the person is {at}", f"that person is {at}"], f"person {pl}"))
+    pats.append((["where is the person", "where is that person"], "where person"))
+    pats.append((["how is the person", "how is that person"], "how person"))
+
+    # THANK YOU (the sign is glossed "thank")
+    pats.append((["thank you", "thank you so much", "thank you very much"], "thank"))
+    pats.append((["thank you for your help", "thank you for the help",
+                  "thank you so much for your help"], "thank help"))
+    pats.append((["thank you for the water", "thank you for some water"],
+                 "thank water"))
+    for p in PERSON:
+        pats.append(([f"thank you {p}", f"thank you so much {p}"], f"thank {p}"))
+    pats.append((["i am fine thank you", "i am okay thank you", "fine thank you",
+                  "okay thank you"], "fine thank"))
+
+    # "okay" said as a statement is the sign FINE ("are you okay" asks HOW)
+    pats.append((["okay", "it is okay", "that is okay", "it is fine", "that is fine",
+                  "i am okay", "it is alright"], "fine"))
+
+    # offering help ("i will help you" alone is "help you", above)
+    for a in ACTIVITY:
+        pats.append(([f"i will help you {a}", f"i can help you {a}"], f"help you {a}"))
+    for a in ["learn", "study"]:
+        pats.append(([f"i will help you {a} sign language",
+                      f"i can help you {a} sign language"], f"help you {a} sign"))
+
+    # PHONE
+    pats.append((["where is my phone", "where is your phone", "where is the phone"],
+                 "where phone"))
+    pats.append((["do you have your phone", "is this your phone"], "you phone"))
+    pats.append((["this is my phone", "that is my phone"], "my phone"))
+
+    # learning sign language: LEARN / STUDY + SIGN ("language" has no sign)
+    for a in ["learn", "study"]:
+        v = VERB[a]
+        pats.append(([f"i am {v} sign language", f"i am still {v} sign language"],
+                     f"{a} sign"))
+        pats.append(([f"are you {v} sign language", f"you are {v} sign language"],
+                     f"you {a} sign"))
+        pats.append(([f"i want to {a} sign language", f"i really want to {a} sign language"],
+                     f"want {a} sign"))
+        pats.append(([f"do you want to {a} sign language", f"you want to {a} sign language"],
+                     f"you want {a} sign"))
+        for p in PERSON:
+            pats.append(([f"{p} is {v} sign language", f"my {p} is {v} sign language"],
+                         f"{p} {a} sign"))
+            pats.append(([f"{p} wants to {a} sign language",
+                          f"my {p} wants to {a} sign language"], f"{p} want {a} sign"))
+    pats.append((["i am learning to sign", "i am still learning to sign"], "learn sign"))
+
+    # going somewhere TO DO something (spoken order is kept)
+    for pl, acts in PURPOSE.items():
+        for a in acts:
+            goal = f"{TO[pl]} to {a}"
+            pats.append(([f"i want to go {goal}", f"i really want to go {goal}"],
+                         f"want go {pl} {a}"))
+            pats.append(([f"do you want to go {goal}", f"you want to go {goal}"],
+                         f"you want go {pl} {a}"))
+            pats.append(([f"i am going {goal}", f"i will go {goal}"], f"go {pl} {a}"))
+            pats.append(([f"are you going {goal}", f"will you go {goal}"],
+                         f"you go {pl} {a}"))
+            for p in PERSON:
+                pats.append(([f"{p} is going {goal}", f"my {p} is going {goal}"],
+                             f"{p} go {pl} {a}"))
+                pats.append(([f"{p} wants to go {goal}", f"my {p} wants to go {goal}"],
+                             f"{p} want go {pl} {a}"))
+
+    # a person who WANTS something
+    for p in PERSON:
+        for a in ACTIVITY:
+            pats.append(([f"{p} wants to {a}", f"my {p} wants to {a}"], f"{p} want {a}"))
 
     return pats
 

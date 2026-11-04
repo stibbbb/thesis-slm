@@ -51,18 +51,19 @@ from encoder_distilbert import DistilBertEmbeddings, TransformerBlock
 SIGNS = set(CONFIRMED_GESTURES)
 
 # Words that flip a sentence's meaning. Dropping them silently inverts
-# what was said: "i do not understand" became "understand". None of the
-# 34 signs means "no", so the negation is shown as the word "not" on the
+# what was said: "i do not understand" became "understand". Every spoken
+# negation ("no", "don't", "never" ...) is shown as the sign NOT on the
 # Deaf person's screen (the output is text) instead of vanishing.
 NEGATIONS = {"not", "dont", "don't", "no", "never", "cannot", "cant",
              "can't", "wont", "won't", "didnt", "didn't", "isnt", "isn't"}
 NEGATION_MARKER = "not"
 
 # The only signs the training data itself leaves out of a spoken sentence
-# ("are you studying at school" -> "study school"): "my" ~100 times and
-# "you" ~95 times. For these the picker decides. Every other sign carries
-# the message (today, class, study ...) and is always shown.
-OPTIONAL_SIGNS = {"my", "you"}
+# ("are you studying at school" -> "study school"): "my" and "you", and
+# "go" when "going to" only means the future ("i am going to study
+# tomorrow" -> "study tomorrow"). For these the picker decides. Every
+# other sign carries the message (today, class, study ...) and is always shown.
+OPTIONAL_SIGNS = {"my", "you", "go"}
 
 
 class WordPicker(nn.Module):
@@ -150,12 +151,12 @@ def restrict_to_signs(tag_logits, q_logits, words):
        Deaf reader, whatever the model scored it.
 
     2. NO CONTENT SIGN IS LOST. A sign is always shown unless it is one
-       of OPTIONAL_SIGNS ("my", "you"), the only ones the training data
+       of OPTIONAL_SIGNS ("my", "you", "go"), the only ones the training data
        leaves out; for those the picker's keep/drop score decides. The
        picker once dropped "today" from "today we will learn about the
        family", losing when the lesson is.
 
-    3. THE SIGNS KEEP THE ORDER THEY WERE SPOKEN IN. 604 of the 608
+    3. THE SIGNS KEEP THE ORDER THEY WERE SPOKEN IN. 1394 of the 1397
        training targets do; the picker's position scores scrambled new
        sentences ("are you ready to study for class today" came out as
        "you class today study"). A spoken negation is shown as "not" in

@@ -26,7 +26,7 @@ Run: python full_demo.py
 """
 
 import speech_input
-from slm_pipeline import LOOKUP_TABLE, PEOPLE, SIGNS, SLMPipeline, format_turn
+from slm_pipeline import LOOKUP_TABLE, PEOPLE, SIGN_NAMES, SIGNS, SLMPipeline, format_turn
 
 HELP = """  1 = Deaf person signs (D2ND)       2 = hearing person types (ND2D)
   3 = hearing person speaks (ND2D)   w = known words   s = steps on/off
@@ -45,7 +45,7 @@ def screen(title, text):
 
 def show_words():
     print(f"\n  Signs the Deaf person can sign ({len(SIGNS)}):")
-    print("    " + ", ".join(sorted(SIGNS)))
+    print("    " + ", ".join(SIGN_NAMES.get(s, s) for s in sorted(SIGNS)))
     others = sorted(LOOKUP_TABLE - SIGNS)
     print(f"\n  Other words the hearing person can say ({len(others)}):")
     print("    " + ", ".join(others))
