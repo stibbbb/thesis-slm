@@ -18,6 +18,9 @@ itself is in slm_pipeline.py).
   r = reset the conversation memory
   q = quit
 
+Every turn is saved, with the time each box took, to
+logs/latency_<start time>.csv (see latency_log.py); nothing extra is shown.
+
 The words can go on the same line: "1 mother home" or
 "2 where is your mom". A sign can carry the recognizer's confidence,
 "1 mother:0.9 home:0.4"; signs below 0.6 are dropped as unsure.
@@ -25,8 +28,13 @@ The words can go on the same line: "1 mother home" or
 Run: python full_demo.py
 """
 
+import os
+
 import speech_input
 from slm_pipeline import LOOKUP_TABLE, PEOPLE, SIGN_NAMES, SIGNS, SLMPipeline, format_turn
+
+# the logs folder next to this file (slm_training_v2/logs), wherever the demo is started from
+LOG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 
 HELP = """  1 = Deaf person signs (D2ND)       2 = hearing person types (ND2D)
   3 = hearing person speaks (ND2D)   w = known words   s = steps on/off
@@ -58,7 +66,9 @@ def ask(label, text):
 
 
 def main():
-    slm = SLMPipeline()
+    # every turn is saved with the time of each box to logs/latency_<start time>.csv
+    # (latency_log.py); the times are not printed, so the screens stay the same
+    slm = SLMPipeline(log_dir=LOG_DIR)
     mic = speech_input.is_available()
     show_steps = True
 
@@ -66,7 +76,8 @@ def main():
     print("  SLM LIVE DEMO  (adviser's pipeline, both directions)")
     print("=" * 72)
     print(f"  {len(SIGNS)} signs | {len(LOOKUP_TABLE)} words in the lookup table | device: {slm.device}")
-    print(f"  microphone + speech-to-text: {'ready' if mic else 'not installed (type instead)'}\n")
+    print(f"  microphone + speech-to-text: {'ready' if mic else 'not installed (type instead)'}")
+    print(f"  latency log: {slm.log.path}\n")
     print(HELP + "\n")
 
     while True:
@@ -137,6 +148,7 @@ def main():
         print(f"    memory: {held}   |   topic: {topic}"
               + (f" (leaking: {leaks})" if leaks else "") + f"   |   {slm.context.turns} turns\n")
 
+    slm.log.close()          # saves any turns still waiting for a locked log file
     print("Done.")
 
 

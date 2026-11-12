@@ -28,11 +28,13 @@ This file is the pipeline only. To try it live, run: python full_demo.py
 """
 
 import re
+import time
 
 import torch
 
 import speech_input
 from decoder_tinyllama import TinyLlamaForGeneration
+from latency_log import LatencyLog
 from make_labels import normalize_word
 from onnx_config import GLOSS_MAP, normalize_input
 from tokenizer import SimpleTokenizer
@@ -156,14 +158,25 @@ PAST_FORMS = {"went": "go", "ate": "eat", "studied": "study", "learned": "learn"
 
 
 class Turn:
-    """What one pass through a path produced."""
+    """What one pass through a path produced, and how long each box took.
+    The boxes run one after another and each reports here when it is done,
+    so a box's time is the time since the previous box reported."""
 
-    def __init__(self, direction):
+    def __init__(self, direction, source="", received=""):
         self.direction = direction
+        self.source = source     # recognizer, typed signs, microphone or typed text
+        self.received = received # the input exactly as it came in
         self.steps = []          # (box name, what that box produced)
+        self.times = []          # milliseconds each box took, same order as steps
+        self.notes = []          # rules applied (safety net, negation, ...)
+        self.unsure = []         # signs dropped as unsure (below the threshold)
         self.output = ""         # the text on the reader's screen
+        self._last = time.perf_counter()
 
     def add(self, box, detail):
+        now = time.perf_counter()
+        self.times.append((now - self._last) * 1000)
+        self._last = now
         self.steps.append((box, detail))
 
 
@@ -475,12 +488,20 @@ def covered(sign, out_words):
 class SLMPipeline:
     """Both directions of the SLM, one method per pipeline box."""
 
-    def __init__(self, device="cpu"):
+    def __init__(self, device="cpu", log_dir=None):
         self.device = device
         self.tokenizer = SimpleTokenizer(ALL_VOCAB)
         self.picker = self._load(PICKER_PATH, WordPicker)
         self.decoder = self._load(DECODER_PATH, TinyLlamaForGeneration)
         self.context = ActiveContext()
+        # with a log folder, every turn is saved with its timings (latency_log.py)
+        self.log = LatencyLog(log_dir) if log_dir else None
+
+    def _finish(self, turn):
+        """Save the finished turn to the latency log, if there is one."""
+        if self.log is not None:
+            self.log.write(turn, self.context.topic)
+        return turn
 
     def _load(self, path, ModelClass):
         ckpt = torch.load(path, map_location=self.device)
@@ -688,13 +709,14 @@ class SLMPipeline:
         """Hearing -> Deaf. With `text`, the microphone is skipped (typed
         input); without it, the voice is recorded until the speaker stops
         talking, then transcribed."""
-        turn = Turn("hearing -> Deaf")
+        turn = Turn("hearing -> Deaf", "microphone" if text is None else "typed text", text or "")
 
         if text is None:
             audio, why = self.voice_recording(max_seconds)
             seconds = len(audio) / (2 * speech_input.SAMPLE_RATE)
             turn.add("Voice Recording", f"{seconds:.1f} seconds of audio ({why})")
             text = self.speech_to_text(audio)
+            turn.received = text                      # what Vosk heard
             turn.add("Speech to text", repr(text))
         else:
             turn.add("Voice Recording", "skipped: typed input")
@@ -716,7 +738,7 @@ class SLMPipeline:
             turn.add("Transcribed Words", "(nothing)")
             self.display(turn, "")
             turn.add("Display", "Deaf person's screen")
-            return turn
+            return self._finish(turn)
 
         ids = self.tokenize(kept)
         turn.add("Tokenize", str(ids))
@@ -755,22 +777,27 @@ class SLMPipeline:
         detail = f"remembers {self.context.person or 'nobody yet'}; {topic_note}"
         if resolved:
             detail = f"he/she -> {resolved}; " + detail
+            turn.notes.append(f"he/she -> {resolved}")
         turn.add("Active Context", detail)
 
         out = self.transcribed_words(glosses, asked)
         turn.add("Transcribed Words", out or "(nothing)")
         self.display(turn, out)
         turn.add("Display", "Deaf person's screen")
-        return turn
+        return self._finish(turn)
 
     def deaf_to_non_deaf(self, recognized):
-        """Deaf -> hearing. `recognized` is the sign recognizer's output,
-        e.g. "where mother" or ["where", "mother"]."""
-        turn = Turn("Deaf -> hearing")
+        """Deaf -> hearing. `recognized` is the sign recognizer's output: a
+        list of (sign, confidence) pairs or {"sign", "confidence"} dicts, or
+        typed text such as "where mother" (the demo's option 1)."""
+        from_recognizer = isinstance(recognized, (list, tuple))
+        turn = Turn("Deaf -> hearing", "recognizer" if from_recognizer else "typed signs",
+                    _as_received(recognized))
 
         signs, found = self.transcribed_signs(recognized)
         signs = signs[:MAX_WORDS]
         negated = found["negated"]
+        turn.unsure = found["unsure"]
         extras = []
         if found["unsure"]:
             extras.append("unsure, dropped: " + ", ".join(found["unsure"]))
@@ -783,7 +810,7 @@ class SLMPipeline:
             # only a negation was signed: it still means "no"
             self.display(turn, "no." if negated else "")
             turn.add("Display", "hearing person's screen" if negated else "nothing recognised")
-            return turn
+            return self._finish(turn)
 
         ids = self.tokenize(signs)
         turn.add("Tokenize", str(ids))
@@ -805,6 +832,7 @@ class SLMPipeline:
             if added:
                 extra = self.embedding(self.tokenize([added]), "signs")
                 vectors = torch.cat([extra, vectors], dim=1)
+                turn.notes.append(f"{added} added from memory")
             turn.add("Active Context", f"{reason}; {topic_note}")
 
         answer = None if repair else self.context.short_answer(signs)
@@ -820,15 +848,35 @@ class SLMPipeline:
             sentence, notes = self.sentence_completion(vectors, signs, negated)
         turn.add("Sentence Completion", sentence
                  + (f"   [{'; '.join(notes)}]" if notes else ""))
+        turn.notes += [n.split(":")[0] for n in notes]   # e.g. "safety net", "negation"
 
         self.context.note_deaf(signs, sentence)
         self.display(turn, punctuate(sentence))
         turn.add("Display", "hearing person's screen (with punctuation)")
-        return turn
+        return self._finish(turn)
 
 
 def _count(n, noun):
     return f"{n} {noun}" + ("" if n == 1 else "s")
+
+
+def _as_received(recognized):
+    """The recognizer's output as one line for the log: "where:0.91 you:0.85"."""
+    if not isinstance(recognized, (list, tuple)):
+        return str(recognized)
+    parts = []
+    for r in recognized:
+        if isinstance(r, dict):
+            sign, conf = r.get("sign") or r.get("word") or "", r.get("confidence")
+        elif isinstance(r, (list, tuple)) and len(r) == 2:
+            sign, conf = r
+        else:
+            sign, conf = r, None
+        try:
+            parts.append(f"{sign}:{float(conf):.2f}" if conf is not None else str(sign))
+        except (TypeError, ValueError):
+            parts.append(f"{sign}:{conf}")
+    return " ".join(parts)
 
 
 _training_words = None
